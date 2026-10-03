@@ -37,7 +37,7 @@ button,input,select{font:inherit}
 #toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);border:1px solid var(--gold);padding:10px 16px;border-radius:12px;z-index:9;max-width:90%}#toast[hidden]{display:none}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.1</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.11</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwDoBowKR2yK_MLBjjTrm9XKmmj_hmjY0X65CBUWa7_2gLg5lvoSoyhffpedNyKQXDnoQ/exec',MIN=100,BANK=10000;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -92,7 +92,7 @@ function canBet(){return!(S.md==='house'&&S.hs.o===me)&&P().c>0}
 function mainBtn(){const h=isH();
  if(S.ph==='lobby')return h?['ゲーム開始','act("startGame")',1]:['開始待ち','',0];
  if(S.ph==='prep')return h?['賭けを始める','startSheet()',1]:['待機中','',0];
- if(S.ph==='bet'){if(S.bt[me]==null&&(canBet()||h))return['ベットする','betSheet()',1];return h?['締め切る','act("close")',1]:['ベット済み','',0]}
+ if(S.ph==='bet'){if(S.bt[me]==null&&canBet())return['ベットする','betSheet()',1];return h?['締め切る','act("close")',1]:[S.bt[me]==null?'親は待機中':'ベット済み','',0]}
  const ok=S.md==='house'?(me===S.hs.o||h):h;return ok?['結果を入力','resSheet()',1]:['結果待ち','',0]}
 function backBtn(){if(S.ph==='bet')return isH()?['全員に返す','if(confirm("全員のベットを返しますか?"))act("cancel")']:(S.bt[me]!=null?['取り消す','act("withdraw")']:null);
  return S.hp&&(S.lp===me||isH())?['戻す','act("undo")']:null}
@@ -104,7 +104,9 @@ function fm(k){const T={send:'送金する',lend:'貸す',borrow:'借りる',rep
  sheet(`<h3>${T}</h3>${k==='take'?'':`<label>相手</label><select id=fp>${opts()}</select>`}<label>金額</label><input id=fa type=number inputmode=numeric><button class=ok onclick="fok('${k}')">${k==='take'?'入金して親になる':'申請する'}</button>${k==='take'||k==='repay'?'':'<small>相手が承認すると成立します</small>'}`)}
 function fok(k){const a=+$('#fa').value,t=$('#fp')?$('#fp').value:null;closeSheet();act(k,{to:t,amt:a})}
 function bank(d){closeSheet();act('bank',{d:d})}
-function startSheet(){sheet(`<h3>賭けを始める</h3><button class=ok onclick="closeSheet();act('start',{md:'game'})">ゲームポット(ポーカーなど)</button><button ${S.hs.o?'':'disabled'} onclick="closeSheet();act('start',{md:'house'})">倍率(親と勝負)</button>${S.hs.o?'':'<small>倍率は、誰かが「親になる」と使えます</small>'}`)}
+function startSheet(){sheet(`<h3>賭けを始める</h3><button class=ok onclick="closeSheet();act('start',{md:'game'})">ゲームポット(ポーカーなど)</button><button onclick="${S.hs.o?'startH()':'needHouse()'}">倍率(親と勝負)</button>`)}
+function startH(){closeSheet();act('start',{md:'house'})}
+function needHouse(){sheet(`<h3>先に親が必要です</h3><p>倍率は、親(胴元)と勝負するモードです。親になる人が、準備フェーズの「コイン → 親になる」で、ハウスにコインを入れてから始めます。</p><button class=ok onclick="fm('take')">自分が親になる</button><button class=ln onclick="startSheet()">戻る</button>`)}
 function betSheet(){const c=P().c;sheet(`<h3>ベット(${MIN}以上 / 残高${c})</h3><input id=fa type=number inputmode=numeric value="${Math.min(MIN,c)}">${canBet()?`<button class=ok onclick="closeSheet();act('bet',{amt:+$('#fa').value})">ベットする</button>`:''}${isH()?`<button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`)}
 function resSheet(){const ids=Object.keys(S.bt);
  if(S.md==='game')return sheet(`<h3>配分(ポット ${pot()})</h3>${Object.keys(S.p).map(k=>`<div class=r2><span>${esc(S.p[k].n)}</span><input class=al data-k=${k} type=number inputmode=numeric value=0 oninput=sum()><button class="ln w" onclick="all1('${k}')">総取り</button></div>`).join('')}<div id=sm></div><button class=ok onclick="resG()">配分を確定</button>`)||sum();
