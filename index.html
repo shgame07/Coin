@@ -37,7 +37,7 @@ button,input,select{font:inherit}
 #toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);border:1px solid var(--gold);padding:10px 16px;border-radius:12px;z-index:9;max-width:90%}#toast[hidden]{display:none}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.11</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.16</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwDoBowKR2yK_MLBjjTrm9XKmmj_hmjY0X65CBUWa7_2gLg5lvoSoyhffpedNyKQXDnoQ/exec',MIN=100,BANK=10000;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -66,13 +66,13 @@ function choose(){const q=new URLSearchParams(location.search).get('room')||'';
  <div style="height:24px"></div><button class=b2 onclick="home()">← 名前を変える</button></div>`}
 let GB=null;
 function guide(b){GB=b;$('#app').innerHTML=`<div class=guide><button onclick="GB()">← 戻る</button><h1>使い方</h1>
-<section><h2>このサイトでできること</h2><p>ポーカーなどで使うコインを、みんなのスマホで管理します。実物のコインを持ち運ぶ必要はありません。全員の残高・ポット・借金が、同じ画面でリアルタイムに共有されます。</p><ul><li>最大8人まで。全員10,000コインでスタート</li><li>ログイン不要。同じ端末で開き直すと、自動でルームに戻ります</li></ul></section>
+<section><h2>このサイトでできること</h2><p>ポーカーなどで使うコインを、みんなのスマホで管理します。実物のコインを持ち運ぶ必要はありません。全員の残高・ポット・借金が、同じ画面でリアルタイムに共有されます。</p><ul><li>最大8人まで。全員が同じコインでスタート(初期値は10,000。代表者が、ゲーム開始前に「初期コイン」ボタンで変更できます)</li><li>ログイン不要。同じ端末で開き直すと、自動でルームに戻ります</li></ul></section>
 <section><h2>全体の流れ</h2><ul><li>① ホームで名前を入れて「決定」</li><li>② 「ルームを作る」か、コードで「ルームに参加」</li><li>③ 全員が揃ったら、代表者が「ゲーム開始」</li><li>④ 準備 → 賭け → 結果 を、何度でも繰り返す</li><li>⑤ 代表者が最終精算 → 借金を引いた順位を発表</li></ul><p>ルームへの招待は、☰メニューの「ルームを共有」でURLを送るだけです。開始後の途中参加もできます。</p></section>
 <section><h2>3つのフェーズ</h2><ul><li><b>準備</b>: 送金・貸し借り・銀行借入・親の交代など、コインのやり取りをする時間。ここでしかできません</li><li><b>賭け</b>: 全員がベットする時間。最低100コインから、金額は自由。残高が足りない人は、準備のうちに借りておきます</li><li><b>結果</b>: ポットの配分や、当たり外れを入力して、コインを動かす時間。終わると準備に戻ります</li></ul><p>賭けの途中は送金や借入ができないので、残高が食い違いません。</p></section>
 <section><h2>ポットとは</h2><p>賭けられたコインを一時的に集めておく場所です。2種類あります。</p><p><b>① ゲームポット</b>(プレイヤー同士の勝負)<br>全員のベットが1つのポットに集まり、結果フェーズで、実際のコイン数を指定して配ります。「総取り」ボタンで、1人に全額を渡せます。2位以下にも配るときは、人ごとに数字を入れます。合計がポットと一致しないと確定できません。</p><p><b>② ハウスポット</b>(親との勝負 = 倍率)<br>親の持ち金です。詳しくは次の「親」を見てください。</p></section>
 <section><h2>親とは</h2><p>「親」は、倍率ゲームの胴元です。同時に1人だけで、準備フェーズに「コイン → 親になる」で、ハウスポットへコインを入れて始めます。</p><ul><li>ハズレのベットは、ハウスポットに入ります</li><li>当たりの人には「ベット × 倍率」が、ハウスポットから払われます(2倍なら、賭けた額の2倍)</li><li>引き分けは、ベットがそのまま返ります</li><li>ハウスポットが足りないときは、払える分までです</li><li>親は、自分の賭けには参加できません</li><li>「親を降りる」と、ハウスポットの残りが全額、その人に戻ります。親の交代はこの方法で行います</li></ul><p>結果の入力は、親か代表者が行います。</p></section>
 <section><h2>どっちを使う?(おすすめ)</h2><div class=rec><b>ゲームポット がおすすめ</b><br>ポーカー、大富豪、ババ抜きなど、プレイヤー同士で勝ち負けを決めるゲーム</div><div class=rec><b>倍率(親あり) がおすすめ</b><br>ルーレット、サイコロの目当て、ブラックジャック(親がディーラー)、「当たったら2倍」の自作ゲーム</div><p>どちらでも、賭けを始めるときに選べます。</p></section>
-<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、☰メニューの「申請」で確認できます(届くと数字のバッジが出ます)</li><li><b>銀行</b>は、10,000コイン単位でいつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
+<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、☰メニューの「申請」で確認できます(届くと数字のバッジが出ます)</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
 <section><h2>代表者の役目</h2><p>ルームを作った人が代表者です。ゲーム開始、賭けの開始と締め切り、ポットの配分、最終精算を担当します。「全員に同じ額を賭けさせる」も使えるので、みんながスマホを触らなくても進められます。代表者は、☰メニューの「代表者を移す」で、ほかの人に交代できます。</p></section>
 <section><h2>ボタンの見方</h2><ul><li><b>大きいボタン</b>: 今のフェーズで次にやること(開始・ベット・締め切り・結果入力)。できないときは灰色になります</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: 申請、履歴、共有、退出、代表者の移譲、最終精算</li></ul></section>
 <section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。結果を全員が見たあと、ルームのデータは自動で削除されます。必要なら、「結果をコピー」で保存してください。</p></section>
@@ -86,8 +86,8 @@ function render(){if(!S)return;if(S.phase==='ended'||S.ph==='ended')return ended
  const nb=mine().length,[mt,mf,md]=mainBtn(),bk=backBtn();
  const pots=(S.ph!=='prep'&&S.bt?`<div class=pot>${S.md==='house'?'賭け金':'ゲームポット'}<b>${pot()}</b></div>`:'')+(S.hs.o?`<div class=pot>ハウス(親: ${esc(S.p[S.hs.o].n)})<b>${S.hs.c}</b></div>`:'');
  $('#app').innerHTML=`<div class=top><div class=me><div class=ph>${S.ph==='lobby'?'参加受付中':PH[S.ph]+'フェーズ'} ・ ルーム${S.id}</div><b>${P().c}</b>${P().b?` <small>銀行 -${P().b}</small>`:''}</div><button class=ib onclick="menu()">☰${nb?`<span class=bg>${nb}</span>`:''}</button></div>
- <div class=mid>${S.ph==='lobby'?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>全員が入ったら、代表者が開始します</div>':''}${pots?`<div class=pots>${pots}</div>`:''}${Object.keys(S.p).map(k=>{const p=S.p[k];return`<div class="row ${k===me?'me':''}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('')}</div>
- <div class=bar><button class=sm ${S.ph==='prep'?'':'disabled'} onclick="coinMenu()">コイン</button><button class=big ${md?'':'disabled'} onclick='${mf}'>${mt}</button><button class=sm ${bk?'':'disabled'} onclick='${bk?bk[1]:''}'>${bk?bk[0]:'戻す'}</button></div>`}
+ <div class=mid>${S.ph==='lobby'?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+(S.ic||10000)+' ・ 全員が入ったら、代表者が開始します</div>':''}${pots?`<div class=pots>${pots}</div>`:''}${Object.keys(S.p).map(k=>{const p=S.p[k];return`<div class="row ${k===me?'me':''}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('')}</div>
+ <div class=bar><button class=sm ${S.ph==='prep'||(S.ph==='lobby'&&isH())?'':'disabled'} onclick="${S.ph==='lobby'?'initSheet()':'coinMenu()'}">${S.ph==='lobby'?'初期コイン':'コイン'}</button><button class=big ${md?'':'disabled'} onclick='${mf}'>${mt}</button><button class=sm ${bk?'':'disabled'} onclick='${bk?bk[1]:''}'>${bk?bk[0]:'戻す'}</button></div>`}
 function canBet(){return!(S.md==='house'&&S.hs.o===me)&&P().c>0}
 function mainBtn(){const h=isH();
  if(S.ph==='lobby')return h?['ゲーム開始','act("startGame")',1]:['開始待ち','',0];
@@ -98,21 +98,22 @@ function backBtn(){if(S.ph==='bet')return isH()?['全員に返す','if(confirm("
  return S.hp&&(S.lp===me||isH())?['戻す','act("undo")']:null}
 function sheet(h){$('#sh').innerHTML='<div class=bd onclick="closeSheet()"></div><div class=pn>'+h+'</div>';$('#sh').hidden=false}
 function closeSheet(){$('#sh').hidden=true}
-function coinMenu(){const o=S.hs.o===me;sheet(`<h3>コイン</h3><div class=g><button onclick="fm('send')">送金する</button><button onclick="fm('lend')">貸す</button><button onclick="fm('borrow')">借りる</button><button onclick="fm('repay')">返す</button><button class=ln onclick="bank('borrow')">銀行から${BANK}借りる</button><button class=ln onclick="bank('repay')">銀行へ${BANK}返す</button>${!S.hs.o?`<button onclick="fm('take')">親になる</button>`:o?`<button onclick="closeSheet();act('drop')">親を降りる</button>`:''}</div>`)}
+function coinMenu(){const o=S.hs.o===me;sheet(`<h3>コイン</h3><div class=g><button onclick="fm('send')">送金する</button><button onclick="fm('lend')">貸す</button><button onclick="fm('borrow')">借りる</button><button onclick="fm('repay')">返す</button><button class=ln onclick="bank('borrow')">銀行から${S.ic||10000}借りる</button><button class=ln onclick="bank('repay')">銀行へ${S.ic||10000}返す</button>${!S.hs.o?`<button onclick="fm('take')">親になる</button>`:o?`<button onclick="closeSheet();act('drop')">親を降りる</button>`:''}</div>`)}
 function fm(k){const T={send:'送金する',lend:'貸す',borrow:'借りる',repay:'返す',take:'親になる(ハウスへ入れる額)'}[k];
  if(k!=='take'&&!opts())return toast('ほかの参加者がいません');
  sheet(`<h3>${T}</h3>${k==='take'?'':`<label>相手</label><select id=fp>${opts()}</select>`}<label>金額</label><input id=fa type=number inputmode=numeric><button class=ok onclick="fok('${k}')">${k==='take'?'入金して親になる':'申請する'}</button>${k==='take'||k==='repay'?'':'<small>相手が承認すると成立します</small>'}`)}
 function fok(k){const a=+$('#fa').value,t=$('#fp')?$('#fp').value:null;closeSheet();act(k,{to:t,amt:a})}
 function bank(d){closeSheet();act('bank',{d:d})}
+function initSheet(){sheet(`<h3>初期コイン</h3><p>全員のスタート時のコインです。ゲーム開始前に決めます(いまは ${S.ic||10000})。銀行から借りられる1回の額も、この額になります。</p><input id=fa type=number inputmode=numeric value="${S.ic||10000}"><button class=ok onclick="closeSheet();act('setInit',{amt:+$('#fa').value})">この額に変更</button>`)}
 function startSheet(){sheet(`<h3>賭けを始める</h3><button class=ok onclick="closeSheet();act('start',{md:'game'})">ゲームポット(ポーカーなど)</button><button onclick="${S.hs.o?'startH()':'needHouse()'}">倍率(親と勝負)</button>`)}
 function startH(){closeSheet();act('start',{md:'house'})}
 function needHouse(){sheet(`<h3>先に親が必要です</h3><p>倍率は、親(胴元)と勝負するモードです。親になる人が、準備フェーズの「コイン → 親になる」で、ハウスにコインを入れてから始めます。</p><button class=ok onclick="fm('take')">自分が親になる</button><button class=ln onclick="startSheet()">戻る</button>`)}
 function betSheet(){const c=P().c;sheet(`<h3>ベット(${MIN}以上 / 残高${c})</h3><input id=fa type=number inputmode=numeric value="${Math.min(MIN,c)}">${canBet()?`<button class=ok onclick="closeSheet();act('bet',{amt:+$('#fa').value})">ベットする</button>`:''}${isH()?`<button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`)}
 function resSheet(){const ids=Object.keys(S.bt);
- if(S.md==='game')return sheet(`<h3>配分(ポット ${pot()})</h3>${Object.keys(S.p).map(k=>`<div class=r2><span>${esc(S.p[k].n)}</span><input class=al data-k=${k} type=number inputmode=numeric value=0 oninput=sum()><button class="ln w" onclick="all1('${k}')">総取り</button></div>`).join('')}<div id=sm></div><button class=ok onclick="resG()">配分を確定</button>`)||sum();
+ if(S.md==='game')return sheet(`<h3>配分(ポット ${pot()})</h3>${Object.keys(S.p).map(k=>`<div class=r2><span>${esc(S.p[k].n)}</span><input class=al data-k=${k} type=number inputmode=numeric placeholder=0 oninput=sum()><button class="ln w" onclick="all1('${k}')">総取り</button></div>`).join('')}<div id=sm></div><button class=ok onclick="resG()">配分を確定</button>`)||sum();
  sheet(`<h3>結果(倍率)</h3>${ids.map(k=>`<div class=r2><span>${esc(S.p[k].n)} ${S.bt[k]}</span><select data-k=${k} class=rs><option value=l>ハズレ</option><option value=w>当たり</option><option value=d>引分</option></select><input class="w rm" data-k=${k} type=number step=any value=2></div>`).join('')}<small>当たり = ベット×倍率をハウスから払います(足りなければ払える分まで)</small><button class=ok onclick="resH()">結果を確定</button>`)}
 function sum(){const t=[...document.querySelectorAll('.al')].reduce((a,i)=>a+(+i.value||0),0);$('#sm').textContent='合計 '+t+' / '+pot()}
-function all1(k){document.querySelectorAll('.al').forEach(i=>i.value=i.dataset.k===k?pot():0);sum()}
+function all1(k){document.querySelectorAll('.al').forEach(i=>i.value=i.dataset.k===k?pot():'');sum()}
 function resG(){const al={};document.querySelectorAll('.al').forEach(i=>al[i.dataset.k]=Math.round(+i.value||0));closeSheet();act('resG',{al:al})}
 function resH(){const rs={};document.querySelectorAll('.rs').forEach(i=>rs[i.dataset.k]={r:i.value,m:+document.querySelector('.rm[data-k="'+i.dataset.k+'"]').value});closeSheet();act('resH',{rs:rs})}
 function menu(){sheet(`<h3>メニュー</h3><button onclick="reqs()">申請${mine().length?'('+mine().length+'件)':''}</button><button onclick="hist()">履歴</button><button onclick="share()">ルームを共有</button>${isH()&&Object.keys(S.p).length>1?`<button onclick="giveSheet()">代表者を移す</button>`:''}${S.ph==='prep'||S.ph==='lobby'?`<button class=ln onclick="if(confirm('退出しますか?'))leave()">退出</button>`:''}${isH()&&S.ph==='prep'?`<button class=dg onclick="if(confirm('最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?')){closeSheet();act('settle')}">最終精算</button>`:''}`)}
@@ -127,6 +128,7 @@ async function share(){const u=location.origin+location.pathname+'?room='+S.id;
 function ended(){closeSheet();const rk=S.res||[];
  $('#app').innerHTML=`<div class=home><h1>最終結果</h1><p>借金を引いた最終コイン数です</p>${rk.map((r,i)=>`<div class="row ${r.id===me?'me':''}"><div class=n>${i+1}位 ${esc(r.n)}<small>残高 ${r.c} / 銀行借入 -${r.b}</small></div><b>${r.f}</b></div>`).join('')}<br><button onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(rk.map((r,i)=>(i+1)+'位 '+r.n+' '+r.f).join(' / '))}').then(()=>toast('結果をコピーしました'))">結果をコピー</button><button class=b2 onclick="reset()">ホームに戻る</button></div>`;
  if(!acked){acked=true;post({a:'ack',r:rid,p:me});rid=null;sv(null)}}
+document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[type=number]'))setTimeout(()=>{try{e.target.select()}catch(x){}},0)});
 setInterval(async()=>{if(!rid||busy||!S)return;try{const r=await(await fetch(API+'?r='+rid+'&v='+S.v)).json();
  if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s){S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}},1500);
 (async()=>{const o=ld();if(o.rid&&o.me){const r=await(await fetch(API+'?r='+o.rid+'&v=0')).json().catch(()=>({}));
