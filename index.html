@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>コイン管理</title>
+<title>コインプラット</title>
 <style>
 :root{--bg:#dcefff;--card:#fff;--line:#b9d9fb;--top:#2272e8;--top2:#1d5fc4;--ink:#0f2c52;--mute:#456691;--acc:#1d6fe0;--gold:#ffc83d;--gold2:#d99a00}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -60,7 +60,7 @@ button,input,select{font:inherit}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 @media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.sm:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.18</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.19</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwDoBowKR2yK_MLBjjTrm9XKmmj_hmjY0X65CBUWa7_2gLg5lvoSoyhffpedNyKQXDnoQ/exec',MIN=100,BANK=10000;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -79,7 +79,7 @@ function reset(){S=null;me=rid=null;pc=null;PS=null;acked=false;sv(null);closeSh
 async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
 let NAME='';const savedName=()=>{try{return localStorage.getItem('cmn')||''}catch(e){return''}};
 function home(){NAME=NAME||savedName();
- $('#app').innerHTML=`<div class=home><h1>コイン管理</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。</p>
+ $('#app').innerHTML=`<div class=home><h1>コインプラット</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。</p>
  <label class=lb>プレイヤー名</label><input id=nm maxlength=12 placeholder="名前を入力" value="${esc(NAME)}">
  <button onclick="nameOk()">決定</button><div style="height:40px"></div><button class=b2 onclick="guide(home)">使い方</button></div>`}
 function nameOk(){const n=$('#nm').value.trim();if(!n)return toast('名前を入力してください');NAME=n;try{localStorage.setItem('cmn',n)}catch(e){}choose()}
@@ -186,14 +186,16 @@ function reqs(){const T={send:'送金',lend:'貸し',repay:'返済'};sheet(`<h3>
 function rq(a,id){closeSheet();act(a,{id:id})}
 function hist(){sheet(`<h3>履歴</h3>${S.lg.map(l=>`<div class=it>${esc(l)}</div>`).join('')}`)}
 async function share(){const u=location.origin+location.pathname+'?room='+S.id;
- try{if(navigator.share)return await navigator.share({title:'コイン管理',text:'ルームコード '+S.id,url:u});await navigator.clipboard.writeText(u);toast('URLをコピーしました')}catch(e){if(e&&e.name==='AbortError')return;sheet(`<h3>ルームコード ${S.id}</h3><input readonly value="${esc(u)}" onclick="this.select()">`)}}
+ try{if(navigator.share)return await navigator.share({title:'コインプラット',text:'ルームコード '+S.id,url:u});await navigator.clipboard.writeText(u);toast('URLをコピーしました')}catch(e){if(e&&e.name==='AbortError')return;sheet(`<h3>ルームコード ${S.id}</h3><input readonly value="${esc(u)}" onclick="this.select()">`)}}
 function copyRes(){const t=(S.res||[]).map((r,i)=>(i+1)+'位 '+r.n+' '+r.f).join(' / ');try{navigator.clipboard.writeText(t).then(()=>toast('結果をコピーしました'),()=>toast('コピーできませんでした'))}catch(e){toast('コピーできませんでした')}}
 function ended(){closeSheet();const rk=S.res||[];
  $('#app').innerHTML=`<div class=home><h1>最終結果</h1><p>借金を引いた最終コイン数です</p>${rk.map((r,i)=>`<div class="row ${r.id===me?'me':''}"><div class=n>${i+1}位 ${esc(r.n)}<small>残高 ${r.c} / 銀行借入 -${r.b}</small></div><b>${r.f}</b></div>`).join('')}<br><button onclick="copyRes()">結果をコピー</button><button class=b2 onclick="reset()">ホームに戻る</button></div>`;
  if(!acked){acked=true;post({a:'ack',r:rid,p:me});rid=null;sv(null)}}
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[type=number]'))setTimeout(()=>{try{e.target.select()}catch(x){}},0)});
-setInterval(async()=>{if(!rid||busy||!S)return;try{const r=await(await fetch(API+'?r='+rid+'&v='+S.v)).json();
- if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}},1500);
+let polling=false;
+setInterval(async()=>{if(!rid||busy||!S||polling)return;polling=true;const my=rid;try{const r=await(await fetch(API+'?r='+my+'&v='+S.v)).json();
+ if(!rid||rid!==my||!S||S.ph==='ended')return;
+ if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}finally{polling=false}},1500);
 (async()=>{const o=ld();if(o.rid&&o.me){const r=await(await fetch(API+'?r='+o.rid+'&v=0')).json().catch(()=>({}));
  if(r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}sv(null)}home()})();
 </script></body></html>
