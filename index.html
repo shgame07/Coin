@@ -3,56 +3,80 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>コイン管理</title>
 <style>
-:root{--felt:#12335c;--felt2:#1b4a82;--chip:#2f80ed;--gold:#8fd0ff;--ivory:#eaf2ff;--ink:#0b1f3a;--mute:#9db8d6}
+:root{--bg:#dcefff;--card:#fff;--line:#b9d9fb;--top:#2272e8;--top2:#1d5fc4;--ink:#0f2c52;--mute:#456691;--acc:#1d6fe0;--gold:#ffc83d;--gold2:#d99a00}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}body{height:100dvh}
-body{background:var(--felt);color:var(--ivory);font-family:"Hiragino Maru Gothic ProN","BIZ UDPGothic","Yu Gothic",sans-serif;display:flex;flex-direction:column;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top)}
+body{background:var(--bg);color:var(--ink);font-family:"Hiragino Maru Gothic ProN","BIZ UDPGothic","Yu Gothic",sans-serif;display:flex;flex-direction:column;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top)}
 button,input,select{font:inherit}
-.top{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink)}
-.top .ph{font-size:13px;color:var(--gold)}.top .me{flex:1}.top b{font-size:22px}
-.ib{background:none;border:1px solid var(--mute);color:var(--ivory);border-radius:10px;width:44px;height:44px;font-size:20px;position:relative}
-.bg{position:absolute;top:-6px;right:-6px;background:var(--chip);border-radius:10px;font-size:12px;padding:1px 6px}
+.top{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--top);color:#fff}
+.tl{flex:1}.ttl{font-size:22px;font-weight:700}
+.st{display:flex;gap:6px;margin-top:6px}.stp{font-size:12px;padding:2px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.55);color:#fff}.stp.on{background:#fff;border-color:#fff;color:var(--top2);font-weight:700}
+.rc{font-size:12px;color:#fff;text-align:center;line-height:1.3}.rc b{display:block;font-size:16px;color:#fff}
+.ib{background:none;border:1px solid rgba(255,255,255,.75);color:#fff;border-radius:10px;width:44px;height:44px;font-size:20px;position:relative}
+.bg{position:absolute;top:-6px;right:-6px;background:var(--gold);color:var(--ink);border-radius:10px;font-size:12px;font-weight:700;padding:1px 6px}
+.mc{margin:12px 16px 8px;padding:10px 16px;background:var(--card);border:2px solid var(--acc);border-radius:16px;box-shadow:0 3px 0 var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.mlab{font-size:13px;color:var(--acc);font-weight:700}
+.mlab::before,.cn{background:radial-gradient(circle at 32% 30%,#fff6bf 0,#ffd54a 45%,#e0a000 100%);border:2px solid #b87800;border-radius:50%}
+.mlab::before{content:"";display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-2px;border-width:1.5px}
+.mnum{font-size:40px;font-weight:700;line-height:1.1;color:var(--ink)}
+.msub{font-size:12px;color:var(--mute);text-align:right;line-height:1.5}
+.mnum.up{animation:fu .7s ease-out}.mnum.dn{animation:fd .7s ease-out}
+@keyframes fu{0%{color:#1a9d57;transform:scale(1.15)}100%{color:var(--ink);transform:scale(1)}}
+@keyframes fd{0%{color:#d9412f;transform:scale(.9)}100%{color:var(--ink);transform:scale(1)}}
+.notice{margin:0 16px 8px;padding:10px 12px;border-radius:12px;background:var(--gold);color:var(--ink);font-size:14px;font-weight:700;box-shadow:0 3px 0 var(--gold2)}
+.msg{margin:0 16px;padding:10px 12px;background:var(--card);border-left:4px solid var(--acc);border-radius:8px;font-size:14px;line-height:1.5}
 .mid{flex:1;overflow:auto;padding:12px 16px}
-.pots{display:flex;gap:8px;margin-bottom:10px}.pot{flex:1;border:1px dashed var(--gold);border-radius:12px;padding:8px 12px;font-size:13px}.pot b{display:block;font-size:20px;color:var(--gold)}
-.row{display:flex;align-items:center;padding:12px;margin-bottom:6px;background:var(--felt2);border-radius:12px}
-.row.me{outline:2px solid var(--gold)}.row .n{flex:1}.row small{display:block;color:var(--mute);font-size:12px}.row b{font-size:18px}
-.bar{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--ink)}
-.big{flex:1;height:64px;border-radius:32px;border:3px solid var(--ivory);background:var(--chip);color:#fff;font-size:20px;font-weight:700;outline:3px dashed rgba(255,255,255,.35);outline-offset:-9px}
-.big:disabled{background:#35506f;color:var(--mute);outline:none;border-color:#52698a}
-.sm{width:76px;height:64px;border-radius:14px;border:1px solid var(--mute);background:var(--felt2);color:var(--ivory);font-size:14px}
-.sm:disabled{opacity:.35}
+.emp{color:var(--mute);font-size:14px;text-align:center;padding:16px 0;line-height:1.6}
+.pots{display:flex;gap:8px;margin-bottom:10px}.pot{flex:1;border:2px dashed var(--acc);background:rgba(255,255,255,.6);border-radius:12px;padding:8px 12px;font-size:13px}.pot b{display:block;font-size:20px;color:var(--acc)}
+.row{display:flex;align-items:center;padding:12px;margin-bottom:6px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.row.me{border:2px solid var(--acc);background:#eaf4ff}.row .n{flex:1}.row small{display:block;color:var(--mute);font-size:12px}.row b{font-size:18px}
+.row.fl{animation:fl 1s ease-out}@keyframes fl{0%{background:#fff0b8}100%{background:var(--card)}}
+.pop{animation:pp .35s ease-out}@keyframes pp{40%{transform:scale(1.05)}}
+.cn{position:fixed;width:24px;height:24px;z-index:30;pointer-events:none;box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 2px 4px rgba(15,44,82,.35)}
+.bar{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;background:var(--card);border-top:2px solid var(--line)}
+.bw{flex:1;display:flex;flex-direction:column;gap:4px}
+.cap{text-align:center;font-size:12px;color:var(--mute);line-height:1.3}
+.big{width:100%;height:64px;border-radius:32px;border:0;background:var(--gold);color:var(--ink);font-size:20px;font-weight:700;box-shadow:0 5px 0 var(--gold2)}
+.big.wait{background:transparent;border:2px dashed #9dbfe6;color:var(--mute);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:none}
+.sm{width:88px;height:64px;border-radius:14px;border:2px solid var(--line);background:#eaf4ff;color:var(--ink);padding:0 4px;line-height:1.25;box-shadow:0 3px 0 var(--line)}
+.sm b{display:block;font-size:15px}.sm i{display:block;font-style:normal;font-size:10px;color:var(--mute);margin-top:2px}
+.sm.off{opacity:.5}
+.big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--gold2)}.big.wait:active{transform:none}.sm:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
 #sh{position:fixed;inset:0;z-index:5}#sh[hidden]{display:none}
-.bd{position:absolute;inset:0;background:rgba(0,0,0,.55)}
-.pn{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:auto;background:var(--ivory);color:var(--ink);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:85%;overflow:auto}
+.bd{position:absolute;inset:0;background:rgba(15,44,82,.45)}
+.pn{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:auto;background:#f6fbff;color:var(--ink);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));max-height:85%;overflow:auto}
 .pn h3{margin:0 0 12px}.g{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pn button,.pn input,.pn select{width:100%;min-height:48px;margin-bottom:8px;border-radius:12px;border:1px solid #a9bdd8;background:#fff;padding:0 12px;color:var(--ink)}
-.pn button{background:var(--felt);color:var(--ivory);border:0}.pn .ok{background:var(--chip)}.pn .dg{background:#7a1f12}.pn .ln{background:#d5e3f5;color:var(--ink)}
-.pn .it{padding:8px 0;border-bottom:1px solid #cbd9ee;font-size:14px}
+.pn button,.pn input,.pn select{width:100%;min-height:48px;margin-bottom:8px;border-radius:12px;border:2px solid var(--line);background:#fff;padding:0 12px;color:var(--ink)}
+.pn button{background:var(--top);color:#fff;border:0;box-shadow:0 3px 0 var(--top2)}.pn .ok{background:var(--gold);color:var(--ink);box-shadow:0 3px 0 var(--gold2);font-weight:700}.pn .dg{background:#d9412f;box-shadow:0 3px 0 #a52c1e}.pn .ln{background:#e6f2ff;color:var(--ink);box-shadow:0 3px 0 var(--line)}
+.pn .it{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
 .pn label{font-size:13px;display:block;margin:6px 0 2px}
+.hint{text-align:center;font-size:12px;color:var(--mute);margin-top:4px}
 .r2{display:flex;gap:6px;align-items:center}.r2>*{flex:1}.r2 .w{flex:0 0 74px}
-#app{flex:1;display:flex;flex-direction:column;min-height:0}#ver{text-align:center;font-size:11px;color:var(--mute);background:var(--ink);padding:4px 0 calc(6px + env(safe-area-inset-bottom))}.home{padding:28px 20px;flex:1;overflow:auto}.lb{display:block;margin:0 0 6px;color:var(--mute);font-size:13px}#ld{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:20;background:var(--ink);border:1px solid var(--gold);border-radius:20px;padding:8px 16px;font-size:14px;display:flex;gap:8px;align-items:center}#ld[hidden]{display:none}#ld i{width:14px;height:14px;border:2px solid var(--gold);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.busy button{opacity:.6;pointer-events:none}.guide{padding:20px;overflow:auto;flex:1}.guide h1{font-size:24px;margin:0 0 12px}.guide section{background:var(--felt2);border-radius:14px;padding:14px;margin-bottom:12px}.guide h2{margin:0 0 8px;font-size:16px;color:var(--gold)}.guide p,.guide li{font-size:14px;line-height:1.7;margin:0 0 6px}.guide ul{margin:0;padding-left:20px}.guide .rec{border:1px dashed var(--gold);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px;line-height:1.6}.guide>button{width:100%;height:48px;border-radius:12px;border:1px solid var(--mute);background:var(--felt2);color:var(--ivory);margin-bottom:12px}.home h1{margin:0 0 4px;font-size:28px}.home p{color:var(--mute);margin:0 0 22px}
-.home input{width:100%;height:52px;border-radius:12px;border:0;padding:0 14px;margin-bottom:10px;background:var(--ivory);color:var(--ink)}
-.home button{width:100%;height:52px;border-radius:12px;border:0;margin-bottom:10px;background:var(--chip);color:#fff;font-weight:700}
-.home .b2{background:var(--felt2);border:1px solid var(--mute)}
-#toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);border:1px solid var(--gold);padding:10px 16px;border-radius:12px;z-index:9;max-width:90%}#toast[hidden]{display:none}
+#app{flex:1;display:flex;flex-direction:column;min-height:0}#ver{text-align:center;font-size:11px;color:var(--mute);background:var(--card);padding:4px 0 calc(6px + env(safe-area-inset-bottom))}.home{padding:28px 20px;flex:1;overflow:auto}.lb{display:block;margin:0 0 6px;color:var(--mute);font-size:13px}#ld{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:20;background:var(--card);border:1px solid var(--acc);border-radius:20px;padding:8px 16px;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 6px rgba(15,44,82,.2)}#ld[hidden]{display:none}#ld i{width:14px;height:14px;border:2px solid var(--acc);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.busy button{opacity:.6;pointer-events:none}.guide{padding:20px;overflow:auto;flex:1}.guide h1{font-size:24px;margin:0 0 12px}.guide section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}.guide h2{margin:0 0 8px;font-size:16px;color:var(--acc)}.guide p,.guide li{font-size:14px;line-height:1.7;margin:0 0 6px}.guide ul{margin:0;padding-left:20px}.guide .rec{border:1px dashed var(--acc);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px;line-height:1.6}.guide>button{width:100%;height:48px;border-radius:12px;border:2px solid var(--acc);background:var(--card);color:var(--acc);font-weight:700;margin-bottom:12px}.home h1{margin:0 0 4px;font-size:28px}.home p{color:var(--mute);margin:0 0 22px}
+.home input{width:100%;height:52px;border-radius:12px;border:2px solid var(--line);padding:0 14px;margin-bottom:10px;background:#fff;color:var(--ink)}
+.home button{width:100%;height:52px;border-radius:12px;border:0;margin-bottom:10px;background:var(--top);color:#fff;font-weight:700;box-shadow:0 3px 0 var(--top2)}
+.home .b2{background:var(--card);color:var(--acc);border:2px solid var(--acc);box-shadow:none}
+#toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:9;max-width:90%}#toast[hidden]{display:none}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
+@media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.sm:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.16</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.18</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwDoBowKR2yK_MLBjjTrm9XKmmj_hmjY0X65CBUWa7_2gLg5lvoSoyhffpedNyKQXDnoQ/exec',MIN=100,BANK=10000;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let S=null,me=null,rid=null,busy=false,acked=false;
+let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0;
 const PH={lobby:'待機',prep:'準備',bet:'賭け',result:'結果',ended:'終了'};
+const TT={lobby:'参加受付中',prep:'準備の時間',bet:'賭けの時間',result:'結果の時間'};
 const ld=()=>{try{return JSON.parse(localStorage.getItem('cm'))||{}}catch(e){return{}}};
 const sv=o=>{try{o?localStorage.setItem('cm',JSON.stringify(o)):localStorage.removeItem('cm')}catch(e){}};
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
 async function post(o){try{return await(await fetch(API,{method:'POST',body:JSON.stringify(o)})).json()}catch(e){return{err:'通信に失敗しました'}}}
-async function act(a,o={}){if(busy)return;busy=true;spin(true);const r=await post(Object.assign({a:a,r:rid,p:me},o));busy=false;spin(false);
-  if(r.err==='gone'){toast('ルームが見つかりません');return reset()}
-  if(r.err)toast(r.err);if(r.s){S=r.s;render()}return r}
+async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;spin(true);const r=await post(Object.assign({a:a,r:rid,p:me},o));busy=false;lockUntil=Date.now()+200;spin(false);
+  if(r.err==='gone'){if(a!=='leave')toast('ルームが見つかりません');return reset()}
+  if(r.err)toast(r.err);if(r.s){S=r.s;if(!S.p[me])return r;render()}return r}
 let ldT=null;function spin(on){clearTimeout(ldT);document.body.classList.toggle('busy',on);if(on)ldT=setTimeout(()=>$('#ld').hidden=false,250);else $('#ld').hidden=true}
-function reset(){S=null;me=rid=null;sv(null);closeSheet();home()}
-async function enter(a,name,code){spin(true);const r=await post({a:a,n:name,r:code});spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
+function reset(){S=null;me=rid=null;pc=null;PS=null;acked=false;sv(null);closeSheet();home()}
+async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
 let NAME='';const savedName=()=>{try{return localStorage.getItem('cmn')||''}catch(e){return''}};
 function home(){NAME=NAME||savedName();
  $('#app').innerHTML=`<div class=home><h1>コイン管理</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。</p>
@@ -72,9 +96,9 @@ function guide(b){GB=b;$('#app').innerHTML=`<div class=guide><button onclick="GB
 <section><h2>ポットとは</h2><p>賭けられたコインを一時的に集めておく場所です。2種類あります。</p><p><b>① ゲームポット</b>(プレイヤー同士の勝負)<br>全員のベットが1つのポットに集まり、結果フェーズで、実際のコイン数を指定して配ります。「総取り」ボタンで、1人に全額を渡せます。2位以下にも配るときは、人ごとに数字を入れます。合計がポットと一致しないと確定できません。</p><p><b>② ハウスポット</b>(親との勝負 = 倍率)<br>親の持ち金です。詳しくは次の「親」を見てください。</p></section>
 <section><h2>親とは</h2><p>「親」は、倍率ゲームの胴元です。同時に1人だけで、準備フェーズに「コイン → 親になる」で、ハウスポットへコインを入れて始めます。</p><ul><li>ハズレのベットは、ハウスポットに入ります</li><li>当たりの人には「ベット × 倍率」が、ハウスポットから払われます(2倍なら、賭けた額の2倍)</li><li>引き分けは、ベットがそのまま返ります</li><li>ハウスポットが足りないときは、払える分までです</li><li>親は、自分の賭けには参加できません</li><li>「親を降りる」と、ハウスポットの残りが全額、その人に戻ります。親の交代はこの方法で行います</li></ul><p>結果の入力は、親か代表者が行います。</p></section>
 <section><h2>どっちを使う?(おすすめ)</h2><div class=rec><b>ゲームポット がおすすめ</b><br>ポーカー、大富豪、ババ抜きなど、プレイヤー同士で勝ち負けを決めるゲーム</div><div class=rec><b>倍率(親あり) がおすすめ</b><br>ルーレット、サイコロの目当て、ブラックジャック(親がディーラー)、「当たったら2倍」の自作ゲーム</div><p>どちらでも、賭けを始めるときに選べます。</p></section>
-<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、☰メニューの「申請」で確認できます(届くと数字のバッジが出ます)</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
+<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、☰メニューの「申請」で確認できます(届くと画面に知らせが出ます)</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
 <section><h2>代表者の役目</h2><p>ルームを作った人が代表者です。ゲーム開始、賭けの開始と締め切り、ポットの配分、最終精算を担当します。「全員に同じ額を賭けさせる」も使えるので、みんながスマホを触らなくても進められます。代表者は、☰メニューの「代表者を移す」で、ほかの人に交代できます。</p></section>
-<section><h2>ボタンの見方</h2><ul><li><b>大きいボタン</b>: 今のフェーズで次にやること(開始・ベット・締め切り・結果入力)。できないときは灰色になります</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: 申請、履歴、共有、退出、代表者の移譲、最終精算</li></ul></section>
+<section><h2>画面の見方</h2><ul><li><b>上のバー</b>: 今のフェーズ(準備・賭け・結果)と、ルームコード。☰はメニューです</li><li><b>あなたのコイン</b>: 自分の残高です。増えると緑、減ると赤に光り、コインが動いて増減を伝えます</li><li><b>メッセージ</b>: 今なにをする場面か、誰を待っているかを表示します</li><li><b>大きいボタン</b>: 今のフェーズで次にやること。下の小さな文字が、押すと何が起こるかの説明です。押せないときは点線の枠になり、待っている理由が出ます</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: 申請、履歴、共有、退出、代表者の移譲、最終精算</li></ul></section>
 <section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。結果を全員が見たあと、ルームのデータは自動で削除されます。必要なら、「結果をコピー」で保存してください。</p></section>
 <button onclick="GB()">← 戻る</button></div>`}
 const P=()=>S.p[me],isH=()=>S.h===me;
@@ -82,21 +106,59 @@ const opts=()=>Object.keys(S.p).filter(k=>k!==me).map(k=>`<option value=${k}>${e
 const debtInfo=k=>{const l=S.d.filter(d=>d.l===k).reduce((a,d)=>a+d.a,0),b=S.d.filter(d=>d.b===k).reduce((a,d)=>a+d.a,0),t=[];if(S.p[k].b)t.push('銀行 -'+S.p[k].b);if(b)t.push('借 -'+b);if(l)t.push('貸 +'+l);return t.join(' / ')};
 const pot=()=>Object.values(S.bt).reduce((a,b)=>a+b,0);
 const mine=()=>S.rq.filter(r=>r.by!==me&&(r.f===me||r.t===me));
+function waitN(){return Object.keys(S.p).filter(k=>S.bt[k]==null&&!(S.md==='house'&&S.hs.o===k)&&S.p[k].c>0).length}
+function msg(){const h=isH(),ph=S.ph;
+ if(ph==='lobby')return h?'全員が入ったら「ゲーム開始」を押します(いま'+Object.keys(S.p).length+'人)':'代表者がゲームを始めるのを待っています';
+ if(ph==='prep')return h?'コインのやり取りは、いまのうちに。準備ができたら「賭けを始める」':'コインのやり取りは、いまのうちに。代表者が賭けを始めます';
+ if(ph==='bet'){const n=waitN();if(S.bt[me]==null&&canBet())return'あなたのベット額を決めてください';return n?'あと'+n+'人のベットを待っています':(h?'全員そろいました。「締め切る」を押します':'全員そろいました。代表者が締め切ります')}
+ const ok=S.md==='house'?(me===S.hs.o||h):h;
+ return ok?'結果を入力してください。終わると準備に戻ります':(S.md==='house'?'親か代表者が、当たり外れを入力しています':'代表者が、ポットの配分を入力しています')}
+function smb(l,c,fn,why){return`<button class="sm${fn?'':' off'}" onclick='${fn||'toast("'+why+'")'}'><b>${l}</b><i>${c}</i></button>`}
 function render(){if(!S)return;if(S.phase==='ended'||S.ph==='ended')return ended();
- const nb=mine().length,[mt,mf,md]=mainBtn(),bk=backBtn();
- const pots=(S.ph!=='prep'&&S.bt?`<div class=pot>${S.md==='house'?'賭け金':'ゲームポット'}<b>${pot()}</b></div>`:'')+(S.hs.o?`<div class=pot>ハウス(親: ${esc(S.p[S.hs.o].n)})<b>${S.hs.c}</b></div>`:'');
- $('#app').innerHTML=`<div class=top><div class=me><div class=ph>${S.ph==='lobby'?'参加受付中':PH[S.ph]+'フェーズ'} ・ ルーム${S.id}</div><b>${P().c}</b>${P().b?` <small>銀行 -${P().b}</small>`:''}</div><button class=ib onclick="menu()">☰${nb?`<span class=bg>${nb}</span>`:''}</button></div>
- <div class=mid>${S.ph==='lobby'?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+(S.ic||10000)+' ・ 全員が入ったら、代表者が開始します</div>':''}${pots?`<div class=pots>${pots}</div>`:''}${Object.keys(S.p).map(k=>{const p=S.p[k];return`<div class="row ${k===me?'me':''}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('')}</div>
- <div class=bar><button class=sm ${S.ph==='prep'||(S.ph==='lobby'&&isH())?'':'disabled'} onclick="${S.ph==='lobby'?'initSheet()':'coinMenu()'}">${S.ph==='lobby'?'初期コイン':'コイン'}</button><button class=big ${md?'':'disabled'} onclick='${mf}'>${mt}</button><button class=sm ${bk?'':'disabled'} onclick='${bk?bk[1]:''}'>${bk?bk[0]:'戻す'}</button></div>`}
+ const old=PS,nw=snap(),OP=old?anchors():{};PS=nw;const chg=old&&!RM()?Object.keys(nw.c).filter(k=>k in old.c&&nw.c[k]!==old.c[k]):[];
+ const nb=mine().length,[mt,mf,md,mcap]=mainBtn(),bk=backBtn(),lb=S.ph==='lobby',pr=S.ph==='prep';
+ const dc=pc==null?0:P().c-pc;pc=P().c;const cls=dc>0?'up':dc<0?'dn':'';
+ const pots=(S.ph!=='prep'&&S.bt?`<div class=pot id=potbox>${S.md==='house'?'賭け金':'ゲームポット'}<b>${pot()}</b></div>`:'')+(S.hs.o?`<div class=pot id=hsbox>ハウス(親: ${esc(S.p[S.hs.o].n)})<b>${S.hs.c}</b></div>`:'');
+ const oth=Object.keys(S.p).filter(k=>k!==me).map(k=>{const p=S.p[k];return`<div class="row${chg.indexOf(k)>=0?' fl':''}" data-k="${k}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('');
+ const stp=lb?'':['prep','bet','result'].map(k=>`<span class="stp ${S.ph===k?'on':''}">${PH[k]}</span>`).join('');
+ const sub=[(S.bt&&S.bt[me]!=null?'ベット '+S.bt[me]:''),debtInfo(me)].filter(Boolean).join('<br>');
+ const L=lb?smb('初期コイン','開始額を変更',isH()?'initSheet()':'','初期コインは代表者だけが変えられます'):smb('コイン','送金・借入・親',pr?'coinMenu()':'','コインのやり取りは、準備フェーズだけです');
+ const R=bk?smb(bk[0],bk[2],bk[1]):smb('戻す','直前の操作を取消','','いま戻せる操作はありません');
+ const B=md?`<button class=big onclick='${mf}'>${mt}</button>`:`<div class="big wait">${mt}</div>`;
+ $('#app').innerHTML=`<div class=top><div class=tl><div class=ttl>${TT[S.ph]}</div>${stp?`<div class=st>${stp}</div>`:''}</div><div class=rc>ルーム<b>${S.id}</b></div><button class=ib onclick="menu()">☰${nb?`<span class=bg>${nb}</span>`:''}</button></div>
+ <div class=mc id=mycard><div><div class=mlab>あなたのコイン${isH()?' (代表)':''}${S.hs.o===me?' (親)':''}</div><div class="mnum ${cls}">${P().c}</div></div><div class=msub>${sub}</div></div>
+ ${nb?`<div class=notice onclick="reqs()">申請が${nb}件 届いています(タップで確認)</div>`:''}<div class=msg>${msg()}</div>
+ <div class=mid>${lb?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+(S.ic||10000)+'</div>':''}${pots?`<div class=pots>${pots}</div>`:''}${oth||'<div class=emp>ほかの参加者を待っています。<br>☰の「ルームを共有」で招待できます</div>'}</div>
+ <div class=bar>${L}<div class=bw>${B}<div class=cap>${mcap}</div></div>${R}</div>`;after(old,nw,OP)}
+const RM=()=>{try{return window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
+function snap(){const c={},b={};let bt=0;Object.keys(S.p).forEach(k=>{c[k]=S.p[k].c;b[k]=S.p[k].b});Object.values(S.bt||{}).forEach(v=>bt+=v);return{c:c,b:b,pot:bt,house:S.hs.c}}
+function flows(o,n){const D={};let bk=0;Object.keys(n.c).forEach(k=>{if(k in o.c){const d=n.c[k]-o.c[k];if(d)D[k]=d;bk-=n.b[k]-o.b[k]}});
+ if(n.pot!==o.pot)D.pot=n.pot-o.pot;if(n.house!==o.house)D.house=n.house-o.house;if(bk)D.bank=bk;
+ const src=[],snk=[];Object.keys(D).forEach(k=>(D[k]<0?src:snk).push([k,Math.abs(D[k])]));
+ const out=[];while(src.length&&snk.length&&out.length<6){const m=Math.min(src[0][1],snk[0][1]);out.push([src[0][0],snk[0][0],m]);src[0][1]-=m;snk[0][1]-=m;if(!src[0][1])src.shift();if(!snk[0][1])snk.shift()}return out}
+function pt(sel){const e=document.querySelector(sel);if(!e)return null;const r=e.getBoundingClientRect();return r.width?{x:r.left+r.width/2,y:r.top+r.height/2,s:sel}:null}
+function anchors(){const o={pot:pt('#potbox'),house:pt('#hsbox'),bank:pt('.top .ttl')};Object.keys(S.p).forEach(k=>o[k]=pt(k===me?'#mycard':'.row[data-k="'+k+'"]'));return o}
+function fly(a,b,n){for(let i=0;i<n;i++){if(document.querySelectorAll('.cn').length>40)return;const e=document.createElement('div');e.className='cn';e.style.left=(a.x-12)+'px';e.style.top=(a.y-12)+'px';document.body.appendChild(e);
+ if(!e.animate){e.remove();continue}
+ const dx=b.x-a.x,dy=b.y-a.y,jx=(Math.random()-.5)*30,ar=-30-Math.random()*30;
+ const an=e.animate([{transform:'translate(0,0) scale(.6)',opacity:0},{transform:'translate('+(dx*.3+jx)+'px,'+(dy*.3+ar)+'px) scale(1.1)',opacity:1,offset:.25},{transform:'translate('+dx*.75+'px,'+(dy*.75+ar/2)+'px) scale(1)',opacity:1,offset:.7},{transform:'translate('+dx+'px,'+dy+'px) scale(.8)',opacity:0}],{duration:750,delay:i*90,easing:'ease-in-out',fill:'both'});
+ an.onfinish=()=>e.remove();setTimeout(()=>e.remove(),2500+i*90)}
+ setTimeout(()=>{const t=b.s&&document.querySelector(b.s);if(t){t.classList.remove('pop');void t.offsetWidth;t.classList.add('pop')}},700+(n-1)*90)}
+function tween(el,a,b,delay){if(!el)return;const id=++twT;el.textContent=a;const t0=performance.now()+delay,D=600;
+ (function f(t){if(id!==twT||!el.isConnected)return;const p=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-p,3);el.textContent=Math.round(a+(b-a)*e);if(p<1)requestAnimationFrame(f)})(performance.now());
+ setTimeout(()=>{if(id===twT&&el.isConnected)el.textContent=b},delay+D+250)}
+function after(old,nw,OP){if(!old||RM())return;const oc=old.c[me];if(oc!=null&&oc!==nw.c[me])tween($('.mnum'),oc,nw.c[me],nw.c[me]>oc?450:0);
+ const fl=flows(old,nw);if(!fl.length)return;const NP=anchors(),mid={x:innerWidth/2,y:innerHeight/2};
+ fl.forEach((f,j)=>{const a=OP[f[0]]||NP[f[0]]||mid,b=NP[f[1]]||OP[f[1]]||mid,n=Math.min(8,Math.max(1,Math.round(Math.log10(Math.max(f[2],1))*1.5)-1));setTimeout(()=>fly(a,b,n),j*120)})}
 function canBet(){return!(S.md==='house'&&S.hs.o===me)&&P().c>0}
 function mainBtn(){const h=isH();
- if(S.ph==='lobby')return h?['ゲーム開始','act("startGame")',1]:['開始待ち','',0];
- if(S.ph==='prep')return h?['賭けを始める','startSheet()',1]:['待機中','',0];
- if(S.ph==='bet'){if(S.bt[me]==null&&canBet())return['ベットする','betSheet()',1];return h?['締め切る','act("close")',1]:[S.bt[me]==null?'親は待機中':'ベット済み','',0]}
- const ok=S.md==='house'?(me===S.hs.o||h):h;return ok?['結果を入力','resSheet()',1]:['結果待ち','',0]}
-function backBtn(){if(S.ph==='bet')return isH()?['全員に返す','if(confirm("全員のベットを返しますか?"))act("cancel")']:(S.bt[me]!=null?['取り消す','act("withdraw")']:null);
- return S.hp&&(S.lp===me||isH())?['戻す','act("undo")']:null}
-function sheet(h){$('#sh').innerHTML='<div class=bd onclick="closeSheet()"></div><div class=pn>'+h+'</div>';$('#sh').hidden=false}
+ if(S.ph==='lobby')return h?['ゲーム開始','act("startGame")',1,'準備フェーズに進みます']:['開始待ち','',0,'代表者が始めるまで待ちます'];
+ if(S.ph==='prep')return h?['賭けを始める','startSheet()',1,'賭け方を選んで、ベットの時間へ']:['待機中','',0,'代表者が賭けを始めます'];
+ if(S.ph==='bet'){if(S.bt[me]==null&&canBet())return['ベットする','betSheet()',1,'金額を入れて確定します'];return h?['締め切る','act("close")',1,'ベットを確定して結果入力へ']:[S.bt[me]!=null?'ベット済み':S.hs.o===me&&S.md==='house'?'親は待機中':'残高がありません','',0,'ほかの人のベットを待っています']}
+ const ok=S.md==='house'?(me===S.hs.o||h):h;return ok?['結果を入力','resSheet()',1,'配分を決めて、準備に戻ります']:['結果待ち','',0,'結果の入力を待っています']}
+function backBtn(){if(S.ph==='bet')return isH()?['全員に返す','if(confirm("全員のベットを返しますか?"))act("cancel")','ベットを全員へ返却']:(S.bt[me]!=null?['取り消す','act("withdraw")','自分のベットを戻す']:null);
+ return S.hp&&(S.lp===me||isH())?['戻す','act("undo")','直前の操作を取消']:null}
+function sheet(h){$('#sh').innerHTML='<div class=bd onclick="closeSheet()"></div><div class=pn>'+h+'<div class=hint>外をタップで閉じる</div></div>';$('#sh').hidden=false}
 function closeSheet(){$('#sh').hidden=true}
 function coinMenu(){const o=S.hs.o===me;sheet(`<h3>コイン</h3><div class=g><button onclick="fm('send')">送金する</button><button onclick="fm('lend')">貸す</button><button onclick="fm('borrow')">借りる</button><button onclick="fm('repay')">返す</button><button class=ln onclick="bank('borrow')">銀行から${S.ic||10000}借りる</button><button class=ln onclick="bank('repay')">銀行へ${S.ic||10000}返す</button>${!S.hs.o?`<button onclick="fm('take')">親になる</button>`:o?`<button onclick="closeSheet();act('drop')">親を降りる</button>`:''}</div>`)}
 function fm(k){const T={send:'送金する',lend:'貸す',borrow:'借りる',repay:'返す',take:'親になる(ハウスへ入れる額)'}[k];
@@ -124,13 +186,14 @@ function reqs(){const T={send:'送金',lend:'貸し',repay:'返済'};sheet(`<h3>
 function rq(a,id){closeSheet();act(a,{id:id})}
 function hist(){sheet(`<h3>履歴</h3>${S.lg.map(l=>`<div class=it>${esc(l)}</div>`).join('')}`)}
 async function share(){const u=location.origin+location.pathname+'?room='+S.id;
- try{if(navigator.share)return await navigator.share({title:'コイン管理',text:'ルームコード '+S.id,url:u});await navigator.clipboard.writeText(u);toast('URLをコピーしました')}catch(e){sheet(`<h3>ルームコード ${S.id}</h3><input readonly value="${esc(u)}" onclick="this.select()">`)}}
+ try{if(navigator.share)return await navigator.share({title:'コイン管理',text:'ルームコード '+S.id,url:u});await navigator.clipboard.writeText(u);toast('URLをコピーしました')}catch(e){if(e&&e.name==='AbortError')return;sheet(`<h3>ルームコード ${S.id}</h3><input readonly value="${esc(u)}" onclick="this.select()">`)}}
+function copyRes(){const t=(S.res||[]).map((r,i)=>(i+1)+'位 '+r.n+' '+r.f).join(' / ');try{navigator.clipboard.writeText(t).then(()=>toast('結果をコピーしました'),()=>toast('コピーできませんでした'))}catch(e){toast('コピーできませんでした')}}
 function ended(){closeSheet();const rk=S.res||[];
- $('#app').innerHTML=`<div class=home><h1>最終結果</h1><p>借金を引いた最終コイン数です</p>${rk.map((r,i)=>`<div class="row ${r.id===me?'me':''}"><div class=n>${i+1}位 ${esc(r.n)}<small>残高 ${r.c} / 銀行借入 -${r.b}</small></div><b>${r.f}</b></div>`).join('')}<br><button onclick="navigator.clipboard&&navigator.clipboard.writeText('${esc(rk.map((r,i)=>(i+1)+'位 '+r.n+' '+r.f).join(' / '))}').then(()=>toast('結果をコピーしました'))">結果をコピー</button><button class=b2 onclick="reset()">ホームに戻る</button></div>`;
+ $('#app').innerHTML=`<div class=home><h1>最終結果</h1><p>借金を引いた最終コイン数です</p>${rk.map((r,i)=>`<div class="row ${r.id===me?'me':''}"><div class=n>${i+1}位 ${esc(r.n)}<small>残高 ${r.c} / 銀行借入 -${r.b}</small></div><b>${r.f}</b></div>`).join('')}<br><button onclick="copyRes()">結果をコピー</button><button class=b2 onclick="reset()">ホームに戻る</button></div>`;
  if(!acked){acked=true;post({a:'ack',r:rid,p:me});rid=null;sv(null)}}
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[type=number]'))setTimeout(()=>{try{e.target.select()}catch(x){}},0)});
 setInterval(async()=>{if(!rid||busy||!S)return;try{const r=await(await fetch(API+'?r='+rid+'&v='+S.v)).json();
- if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s){S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}},1500);
+ if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}},1500);
 (async()=>{const o=ld();if(o.rid&&o.me){const r=await(await fetch(API+'?r='+o.rid+'&v=0')).json().catch(()=>({}));
  if(r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}sv(null)}home()})();
 </script></body></html>
