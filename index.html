@@ -95,9 +95,9 @@ button,input,select{font:inherit}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 @media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.sm:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.25</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.26</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
-const API='https://script.google.com/macros/s/AKfycby-KUFqf3H0WZ6PSeYMnVZNulAw_swIB0vyCrP2LpX74dKHfnK96QOBavluyepTB76-/exec',MIN=100,BANK=10000;
+const API='https://script.google.com/macros/s/AKfycby-KUFqf3H0WZ6PSeYMnVZNulAw_swIB0vyCrP2LpX74dKHfnK96QOBavluyepTB76-/exec',MIN=100;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0,FK='send',LF='open',RP=0,lastSp=0,SPINON=false,SPQ=null,WP={},wTw=0;
 const PH={lobby:'待機',prep:'準備',bet:'賭け',result:'結果',ended:'終了'};
@@ -105,13 +105,15 @@ const TT={lobby:'参加受付中',prep:'準備の時間',bet:'賭けの時間',r
 const ld=()=>{try{return JSON.parse(localStorage.getItem('cm'))||{}}catch(e){return{}}};
 const sv=o=>{try{o?localStorage.setItem('cm',JSON.stringify(o)):localStorage.removeItem('cm')}catch(e){}};
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
-async function post(o){try{return await(await fetch(API,{method:'POST',body:JSON.stringify(o)})).json()}catch(e){return{err:'通信に失敗しました'}}}
-async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;spin(true);const r=await post(Object.assign({a:a,r:rid,p:me},o));busy=false;lockUntil=Date.now()+200;spin(false);
+const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36),sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function post(o){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),25000);try{const r=await(await fetch(API,{method:'POST',body:JSON.stringify(o),signal:ac.signal})).json();return r&&typeof r==='object'?r:{err:'通信に失敗しました',net:1}}catch(e){return{err:'通信に失敗しました',net:1}}finally{clearTimeout(tm)}}
+async function postR(o,n){n=n||3;let r;for(let i=0;i<n;i++){r=await post(o);if(!r.net)break;if(i<n-1)await sleep(1200)}return r}
+async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;spin(true);const r=await postR(Object.assign({a:a,r:rid,p:me,q:uid()},o));busy=false;lockUntil=Date.now()+200;spin(false);
   if(r.err==='gone'){if(a!=='leave')toast('ルームが見つかりません');return reset()}
   if(r.err)toast(r.err);if(r.s){S=r.s;if(!S.p[me])return r;render()}return r}
 let ldT=null;function spin(on){clearTimeout(ldT);document.body.classList.toggle('busy',on);if(on)ldT=setTimeout(()=>$('#ld').hidden=false,250);else $('#ld').hidden=true}
 function reset(){S=null;me=rid=null;pc=null;PS=null;acked=false;sv(null);closeSheet();home()}
-async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
+async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=a==='join'?await postR({a:a,n:name,r:code,q:uid()}):await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
 let NAME='';const savedName=()=>{try{return localStorage.getItem('cmn')||''}catch(e){return''}};
 function home(){NAME=NAME||savedName();
  $('#app').innerHTML=`<div class=home><h1>コインプラット</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。</p>
@@ -300,6 +302,11 @@ let polling=false;
 setInterval(async()=>{if(!rid||busy||!S||polling)return;polling=true;const my=rid;try{const r=await(await fetch(API+'?r='+my+'&v='+S.v)).json();
  if(!rid||rid!==my||!S||S.ph==='ended')return;
  if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}finally{polling=false}},1500);
-(async()=>{const o=ld();if(o.rid&&o.me){const r=await(await fetch(API+'?r='+o.rid+'&v=0')).json().catch(()=>({}));
- if(r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}sv(null)}home()})();
+async function boot(){const o=ld();if(!(o.rid&&o.me))return home();
+ $('#app').innerHTML='<div class=home><p>接続中…</p></div>';
+ let r=null;for(let i=0;i<4;i++){try{const j=await(await fetch(API+'?r='+o.rid+'&v=0')).json();if(j&&typeof j==='object'){r=j;break}}catch(e){}await sleep(1500)}
+ if(r&&r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}
+ if(r){sv(null);return home()}
+ $('#app').innerHTML='<div class=home><h1>接続できません</h1><p>通信が不安定なようです。前回のルームの情報は残してあります。</p><button onclick="boot()">もう一度つなぐ</button><div style="height:16px"></div><button class=b2 onclick="sv(null);home()">ホームへ(前回のルームは忘れる)</button></div>'}
+boot();
 </script></body></html>
