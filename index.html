@@ -39,7 +39,7 @@ button,input,select{font:inherit}
 .big{width:100%;height:64px;border-radius:32px;border:0;background:var(--gold);color:var(--ink);font-size:20px;font-weight:700;box-shadow:0 5px 0 var(--gold2)}
 .big.wait{background:transparent;border:2px dashed #9dbfe6;color:var(--mute);display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:none}
 .sm{width:88px;height:64px;border-radius:14px;border:2px solid var(--line);background:#eaf4ff;color:var(--ink);padding:0 4px;line-height:1.25;box-shadow:0 3px 0 var(--line)}
-.sm b{display:block;font-size:15px}.sm i{display:block;font-style:normal;font-size:10px;color:var(--mute);margin-top:2px}
+.sm b{display:block;font-size:15px}.sm i{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:normal;font-size:10px;color:var(--mute);margin-top:2px;line-height:1.2}
 .sm.off{opacity:.5}
 .big:active{transform:translateY(3px);box-shadow:0 2px 0 var(--gold2)}.big.wait:active{transform:none}.sm:active{transform:translateY(2px);box-shadow:0 1px 0 var(--line)}
 #sh{position:fixed;inset:0;z-index:5}#sh[hidden]{display:none}
@@ -49,6 +49,18 @@ button,input,select{font:inherit}
 .pn button,.pn input,.pn select{width:100%;min-height:48px;margin-bottom:8px;border-radius:12px;border:2px solid var(--line);background:#fff;padding:0 12px;color:var(--ink)}
 .pn button{background:var(--top);color:#fff;border:0;box-shadow:0 3px 0 var(--top2)}.pn .ok{background:var(--gold);color:var(--ink);box-shadow:0 3px 0 var(--gold2);font-weight:700}.pn .dg{background:#d9412f;box-shadow:0 3px 0 #a52c1e}.pn .ln{background:#e6f2ff;color:var(--ink);box-shadow:0 3px 0 var(--line)}
 .pn .it{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.mk{font-size:11px;font-weight:700;padding:1px 8px;border-radius:9px;background:var(--gold);color:var(--ink);white-space:nowrap}.mk.dn{background:#d5e6fb;color:var(--mute)}.mk.x{background:#e4e4e4;color:#777}
+.sec{font-size:13px;font-weight:700;color:var(--acc);margin:4px 0 6px}
+.pd{display:flex;align-items:center;gap:8px;padding:10px 12px;margin-bottom:6px;background:#fff8dc;border:2px solid var(--gold);border-radius:12px}.pd .n{flex:1}.pd small{display:block;color:var(--mute);font-size:12px}.pd b{font-size:18px}
+.seg,.seg3,.seg2{display:grid;gap:6px;margin-bottom:8px}.seg{grid-template-columns:repeat(4,1fr)}.seg3{grid-template-columns:repeat(3,1fr)}.seg2{grid-template-columns:1fr 1fr}
+.seg button,.seg3 button,.seg2 button{margin:0!important}
+.rem{font-size:24px;font-weight:700;text-align:center;margin:4px 0 8px}
+.hr{padding:8px 0;border-bottom:1px solid var(--line)}.hr>div:first-child{margin-bottom:6px;font-weight:700}.hr .rm{margin:8px 0 0}
+.dt{margin-bottom:8px}.dt summary{padding:10px 4px;font-size:14px;color:var(--acc);font-weight:700}
+.pn button:disabled{opacity:.4}
+.pn .gh{font-size:13px;font-weight:700;color:var(--acc);margin:12px 0 4px}
+.pn .it.xx{opacity:.55;text-decoration:line-through}.pn .it .zz{font-size:11px;color:var(--mute);margin-left:4px}.pn .it small{color:var(--mute);margin-left:4px}.pn .dl{font-size:12px;margin-top:2px}.pn .pl{color:#1a9d57}.pn .mn{color:#d9412f}
+
 .pn label{font-size:13px;display:block;margin:6px 0 2px}
 .hint{text-align:center;font-size:12px;color:var(--mute);margin-top:4px}
 .r2{display:flex;gap:6px;align-items:center}.r2>*{flex:1}.r2 .w{flex:0 0 74px}
@@ -57,14 +69,37 @@ button,input,select{font:inherit}
 .home button{width:100%;height:52px;border-radius:12px;border:0;margin-bottom:10px;background:var(--top);color:#fff;font-weight:700;box-shadow:0 3px 0 var(--top2)}
 .home .b2{background:var(--card);color:var(--acc);border:2px solid var(--acc);box-shadow:none}
 #toast{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;z-index:9;max-width:90%}#toast[hidden]{display:none}
+
+.rw{display:flex;gap:12px;align-items:center;margin-bottom:10px;padding:10px;background:#fff;border:2px solid var(--acc);border-radius:16px}
+.wp{position:relative;width:150px;flex:0 0 150px}.wh svg{display:block;width:100%;height:auto}.wh{width:100%;border-radius:50%;box-shadow:0 0 0 5px var(--gold),0 3px 10px rgba(15,44,82,.3)}
+.ptr{position:absolute;top:-12px;left:50%;transform:translateX(-50%);z-index:2;width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-top:18px solid var(--ink);filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+.lgd{flex:1;min-width:0}.lr{display:flex;align-items:center;gap:6px;font-size:14px;padding:2px 0}.lr i{width:12px;height:12px;border-radius:50%;flex:0 0 12px}.lr span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.lr b{font-size:16px}.lr small{color:var(--mute);font-size:11px;min-width:36px;text-align:right}.lt{margin-top:6px;font-size:13px;color:var(--mute)}
+.pv{display:flex;gap:12px;align-items:center;margin-bottom:10px}.pv .wp{width:120px;flex:0 0 120px}.pvt{flex:1;font-size:14px;line-height:1.5}.pvt b{font-size:24px;color:var(--acc)}
+#spin{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 42%,#3a1c71 0,#0b1f3a 58%,#03070f 100%);color:#fff;overflow:hidden;animation:spi .25s ease-out;transition:opacity .4s}
+#spin.out{opacity:0}
+@keyframes spi{from{opacity:0;transform:scale(1.15)}to{opacity:1;transform:scale(1)}}
+.sp-rays{position:absolute;inset:-60%;background:repeating-conic-gradient(from 0deg,rgba(255,214,102,.10) 0 5deg,transparent 5deg 12deg);animation:rot 7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.sp-stage{position:relative;width:min(86vw,400px);aspect-ratio:1;z-index:2;transition:transform .1s linear}
+.sp-wheel{width:100%;height:100%;border-radius:50%;box-shadow:0 0 50px rgba(255,200,61,.65),0 0 0 8px var(--gold),0 0 0 13px #b87800;will-change:transform}.sp-wheel svg{width:100%;height:100%;display:block}
+.sp-ptr{position:absolute;top:-30px;left:50%;margin-left:-16px;z-index:3;width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-top:38px solid #fff;filter:drop-shadow(0 3px 4px rgba(0,0,0,.6));transform-origin:50% 0}
+.sp-ptr.tk{animation:tk .14s ease-out}@keyframes tk{0%{transform:rotate(-24deg)}100%{transform:rotate(0)}}
+.sp-stage.shk{animation:shk .55s}@keyframes shk{0%,100%{translate:0 0}15%{translate:-9px 5px}30%{translate:8px -6px}45%{translate:-6px -4px}60%{translate:6px 5px}80%{translate:-3px 2px}}
+.sp-ttl{position:relative;z-index:2;margin-top:28px;font-size:26px;font-weight:900;letter-spacing:.2em;color:var(--gold);text-shadow:0 0 14px rgba(255,200,61,.8)}
+.sp-res{position:relative;z-index:2;text-align:center;margin-top:18px;min-height:96px}.sp-nm{font-size:40px;font-weight:900;text-shadow:0 0 18px currentColor,0 3px 0 rgba(0,0,0,.5);animation:pop2 .5s cubic-bezier(.2,1.6,.4,1)}.sp-w{font-size:26px;font-weight:900}.sp-amt{margin-top:4px;font-size:20px;color:var(--gold);font-weight:700}
+@keyframes pop2{from{transform:scale(.2);opacity:0}to{transform:scale(1);opacity:1}}
+.sp-flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5}.sp-flash.go{animation:fls .6s ease-out}@keyframes fls{0%{opacity:.85}100%{opacity:0}}
+.sp-c{position:absolute;top:-30px;width:22px;height:22px;z-index:4;pointer-events:none;background:radial-gradient(circle at 32% 30%,#fff6bf 0,#ffd54a 45%,#e0a000 100%);border:2px solid #b87800;border-radius:50%;animation:cf 1.9s ease-in forwards}
+@keyframes cf{to{transform:translateY(110vh) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){#spin{display:none}}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 @media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.sm:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.19</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.24</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycbwDoBowKR2yK_MLBjjTrm9XKmmj_hmjY0X65CBUWa7_2gLg5lvoSoyhffpedNyKQXDnoQ/exec',MIN=100,BANK=10000;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0;
+let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0,FK='send',LF='open',RP=0,lastSp=0,SPINON=false,SPQ=null,WP={},wTw=0;
 const PH={lobby:'待機',prep:'準備',bet:'賭け',result:'結果',ended:'終了'};
 const TT={lobby:'参加受付中',prep:'準備の時間',bet:'賭けの時間',result:'結果の時間'};
 const ld=()=>{try{return JSON.parse(localStorage.getItem('cm'))||{}}catch(e){return{}}};
@@ -96,48 +131,56 @@ function guide(b){GB=b;$('#app').innerHTML=`<div class=guide><button onclick="GB
 <section><h2>ポットとは</h2><p>賭けられたコインを一時的に集めておく場所です。2種類あります。</p><p><b>① ゲームポット</b>(プレイヤー同士の勝負)<br>全員のベットが1つのポットに集まり、結果フェーズで、実際のコイン数を指定して配ります。「総取り」ボタンで、1人に全額を渡せます。2位以下にも配るときは、人ごとに数字を入れます。合計がポットと一致しないと確定できません。</p><p><b>② ハウスポット</b>(親との勝負 = 倍率)<br>親の持ち金です。詳しくは次の「親」を見てください。</p></section>
 <section><h2>親とは</h2><p>「親」は、倍率ゲームの胴元です。同時に1人だけで、準備フェーズに「コイン → 親になる」で、ハウスポットへコインを入れて始めます。</p><ul><li>ハズレのベットは、ハウスポットに入ります</li><li>当たりの人には「ベット × 倍率」が、ハウスポットから払われます(2倍なら、賭けた額の2倍)</li><li>引き分けは、ベットがそのまま返ります</li><li>ハウスポットが足りないときは、払える分までです</li><li>親は、自分の賭けには参加できません</li><li>「親を降りる」と、ハウスポットの残りが全額、その人に戻ります。親の交代はこの方法で行います</li></ul><p>結果の入力は、親か代表者が行います。</p></section>
 <section><h2>どっちを使う?(おすすめ)</h2><div class=rec><b>ゲームポット がおすすめ</b><br>ポーカー、大富豪、ババ抜きなど、プレイヤー同士で勝ち負けを決めるゲーム</div><div class=rec><b>倍率(親あり) がおすすめ</b><br>ルーレット、サイコロの目当て、ブラックジャック(親がディーラー)、「当たったら2倍」の自作ゲーム</div><p>どちらでも、賭けを始めるときに選べます。</p></section>
-<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、☰メニューの「申請」で確認できます(届くと画面に知らせが出ます)</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
+<section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、届くと画面に知らせが出ます。タップすると、ログの「未」から承認できます</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
 <section><h2>代表者の役目</h2><p>ルームを作った人が代表者です。ゲーム開始、賭けの開始と締め切り、ポットの配分、最終精算を担当します。「全員に同じ額を賭けさせる」も使えるので、みんながスマホを触らなくても進められます。代表者は、☰メニューの「代表者を移す」で、ほかの人に交代できます。</p></section>
-<section><h2>画面の見方</h2><ul><li><b>上のバー</b>: 今のフェーズ(準備・賭け・結果)と、ルームコード。☰はメニューです</li><li><b>あなたのコイン</b>: 自分の残高です。増えると緑、減ると赤に光り、コインが動いて増減を伝えます</li><li><b>メッセージ</b>: 今なにをする場面か、誰を待っているかを表示します</li><li><b>大きいボタン</b>: 今のフェーズで次にやること。下の小さな文字が、押すと何が起こるかの説明です。押せないときは点線の枠になり、待っている理由が出ます</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: 申請、履歴、共有、退出、代表者の移譲、最終精算</li></ul></section>
-<section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。結果を全員が見たあと、ルームのデータは自動で削除されます。必要なら、「結果をコピー」で保存してください。</p></section>
+<section><h2>画面の見方</h2><ul><li><b>上のバー</b>: 今のフェーズ(準備・賭け・結果)と、ルームコード。☰はメニューです</li><li><b>あなたのコイン</b>: 自分の残高です。増えると緑、減ると赤に光り、コインが動いて増減を伝えます</li><li><b>メッセージ</b>: 今なにをする場面か、誰を待っているかを表示します</li><li><b>大きいボタン</b>: 今のフェーズで次にやること。下の小さな文字が、押すと何が起こるかの説明です。押せないときは点線の枠になり、待っている理由が出ます</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: ログ、共有、退出、代表者の移譲、最終精算</li></ul></section>
+<section><h2>ターンとログ</h2><p>賭け→結果の1サイクルを「1ターン」と数えます。準備中の送金・貸し借り・銀行などは、ターンの間として「ターン1.5」のように、見るだけの記録が残ります。ログは、☰メニューの「ログ」で見られます。</p><ul><li><b>未</b>: まだ変わるもの。ベット中、保留した賭け、承認待ちの申請</li><li><b>済</b>: 確定したもの。あとから変えられません。間違えたときは、「戻す」(直前の1回だけ)か、差額を動かす新しい操作で直します</li><li><b>取消</b>: 「戻す」で取り消された操作</li></ul><p>「未」の行からは、そのまま承認や、保留の処理ができます。</p></section>
+<section><h2>保留</h2><p>結果が出るのが別のタイミングのときは、結果入力の画面で「あとで入力する(保留)」を選びます。コインはポットに入ったまま準備フェーズに戻り、画面に「保留中」のカードが出ます。保留中でも、別の賭けを始められます。結果が出たら、カードをタップして入力します(準備フェーズにできます)。</p><ul><li>保留中の賭けがある人は、退出できません</li><li>倍率ゲームの保留があるあいだは、親を降りられません</li><li>保留が残っていても、最終精算で全部返金して精算できます</li></ul></section>
+<section><h2>ミニゲーム(ルーレット)</h2><p>代表者が、☰メニューの「ミニゲーム」→「ルーレット」で始めます。1回で1ターンです。</p><ul><li>賭けた人ごとに円盤の枠ができ、<b>賭け額が多いほど枠が広く</b>なります(全体が100%)。数字を変えるたびに、円盤も変わります</li><li>代表者が「回す」を押すと、円盤が回って、止まった枠の人が<b>ポット全部をもらいます</b>。回す前なら、賭け額の<b>上乗せ</b>も、取り消しもできます</li><li>回したあとは、<b>取り消せません</b>(「戻す」も使えません)</li><li>賭けた人が1人だけのときは、回さずに返金します</li></ul></section>
+<section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。精算と同時に、ルームのデータは保存先(スプレッドシート)から全て削除されます。結果画面は、数分間だけ表示できます。必要なら、「結果をコピー」で保存してください。</p></section>
 <button onclick="GB()">← 戻る</button></div>`}
 const P=()=>S.p[me],isH=()=>S.h===me;
 const opts=()=>Object.keys(S.p).filter(k=>k!==me).map(k=>`<option value=${k}>${esc(S.p[k].n)}</option>`).join('');
 const debtInfo=k=>{const l=S.d.filter(d=>d.l===k).reduce((a,d)=>a+d.a,0),b=S.d.filter(d=>d.b===k).reduce((a,d)=>a+d.a,0),t=[];if(S.p[k].b)t.push('銀行 -'+S.p[k].b);if(b)t.push('借 -'+b);if(l)t.push('貸 +'+l);return t.join(' / ')};
 const pot=()=>Object.values(S.bt).reduce((a,b)=>a+b,0);
+const pdSum=r=>Object.values(r.bt).reduce((a,b)=>a+b,0),pendOf=k=>(S.pd||[]).reduce((a,r)=>a+(r.bt[k]||0),0),openN=()=>S.lg.filter(e=>e.s===0).length,canRes=r=>r.md==='house'?(me===S.hs.o||isH()):isH();
 const mine=()=>S.rq.filter(r=>r.by!==me&&(r.f===me||r.t===me));
 function waitN(){return Object.keys(S.p).filter(k=>S.bt[k]==null&&!(S.md==='house'&&S.hs.o===k)&&S.p[k].c>0).length}
 function msg(){const h=isH(),ph=S.ph;
  if(ph==='lobby')return h?'全員が入ったら「ゲーム開始」を押します(いま'+Object.keys(S.p).length+'人)':'代表者がゲームを始めるのを待っています';
- if(ph==='prep')return h?'コインのやり取りは、いまのうちに。準備ができたら「賭けを始める」':'コインのやり取りは、いまのうちに。代表者が賭けを始めます';
+ if(ph==='prep')return(h?'コインのやり取りは、いまのうちに。準備ができたら「賭けを始める」':'コインのやり取りは、いまのうちに。代表者が賭けを始めます')+(S.pd.length?'(保留中 '+S.pd.length+'件)':'');
+ if(ph==='bet'&&S.md==='roulette'){const n=Object.keys(S.bt).length;return h?(n<2?'2人以上がベットしたら「回す」を押します(いま'+n+'人)':'ベットがそろったら「回す」を押します。回すと取り消せません'):(S.bt[me]==null?'あなたのベット額を決めてください':'ベット済み。回すまで上乗せできます')}
  if(ph==='bet'){const n=waitN();if(S.bt[me]==null&&canBet())return'あなたのベット額を決めてください';return n?'あと'+n+'人のベットを待っています':(h?'全員そろいました。「締め切る」を押します':'全員そろいました。代表者が締め切ります')}
  const ok=S.md==='house'?(me===S.hs.o||h):h;
  return ok?'結果を入力してください。終わると準備に戻ります':(S.md==='house'?'親か代表者が、当たり外れを入力しています':'代表者が、ポットの配分を入力しています')}
 function smb(l,c,fn,why){return`<button class="sm${fn?'':' off'}" onclick='${fn||'toast("'+why+'")'}'><b>${l}</b><i>${c}</i></button>`}
 function render(){if(!S)return;if(S.phase==='ended'||S.ph==='ended')return ended();
- const old=PS,nw=snap(),OP=old?anchors():{};PS=nw;const chg=old&&!RM()?Object.keys(nw.c).filter(k=>k in old.c&&nw.c[k]!==old.c[k]):[];
+ const old=PS,nw=snap(),OP=old?anchors():{};PS=nw;
+ if(S.sp&&!old)lastSp=S.sp.i;if(S.sp&&old&&S.sp.i!==lastSp){lastSp=S.sp.i;if(RM())toast(S.sp.wn+' が当選! ポット '+S.sp.tot);else{SPINON=true;SPQ={sp:S.sp,oc:old.c[me]}}}
+ const rl=S.ph==='bet'&&S.md==='roulette';if(!rl)WP={};const chg=old&&!RM()?Object.keys(nw.c).filter(k=>k in old.c&&nw.c[k]!==old.c[k]):[];
  const nb=mine().length,[mt,mf,md,mcap]=mainBtn(),bk=backBtn(),lb=S.ph==='lobby',pr=S.ph==='prep';
  const dc=pc==null?0:P().c-pc;pc=P().c;const cls=dc>0?'up':dc<0?'dn':'';
- const pots=(S.ph!=='prep'&&S.bt?`<div class=pot id=potbox>${S.md==='house'?'賭け金':'ゲームポット'}<b>${pot()}</b></div>`:'')+(S.hs.o?`<div class=pot id=hsbox>ハウス(親: ${esc(S.p[S.hs.o].n)})<b>${S.hs.c}</b></div>`:'');
- const oth=Object.keys(S.p).filter(k=>k!==me).map(k=>{const p=S.p[k];return`<div class="row${chg.indexOf(k)>=0?' fl':''}" data-k="${k}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('');
+ const pdl=S.pd.length?'<div class=sec>保留中(結果待ち)</div>'+S.pd.map(r=>`<div class=pd onclick="pendSheet('${r.id}')"><div class=n>ターン${r.n} ${r.md==='house'?'倍率':'ポット'}<small>${Object.keys(r.bt).map(k=>esc(S.p[k]?S.p[k].n:'?')+' '+r.bt[k]).join(' / ')}</small></div><b>${pdSum(r)}</b><span class=mk>未</span></div>`).join(''):'';
+ const pots=(S.ph!=='prep'&&S.bt&&!rl?`<div class=pot id=potbox>${S.md==='house'?'賭け金':'ゲームポット'}<b>${pot()}</b></div>`:'')+(S.hs.o?`<div class=pot id=hsbox>ハウス(親: ${esc(S.p[S.hs.o].n)})<b>${S.hs.c}</b></div>`:'');
+ const oth=Object.keys(S.p).filter(k=>k!==me).map(k=>{const p=S.p[k];return`<div class="row${chg.indexOf(k)>=0?' fl':''}" data-k="${k}"><div class=n>${esc(p.n)}${k===S.h?' (代表)':''}${k===S.hs.o?' (親)':''}<small>${S.bt&&S.bt[k]!=null?'ベット '+S.bt[k]+' ':''}${pendOf(k)?'保留 '+pendOf(k)+' ':''}${debtInfo(k)}</small></div><b>${p.c}</b></div>`}).join('');
  const stp=lb?'':['prep','bet','result'].map(k=>`<span class="stp ${S.ph===k?'on':''}">${PH[k]}</span>`).join('');
- const sub=[(S.bt&&S.bt[me]!=null?'ベット '+S.bt[me]:''),debtInfo(me)].filter(Boolean).join('<br>');
- const L=lb?smb('初期コイン','開始額を変更',isH()?'initSheet()':'','初期コインは代表者だけが変えられます'):smb('コイン','送金・借入・親',pr?'coinMenu()':'','コインのやり取りは、準備フェーズだけです');
+ const sub=[(S.bt&&S.bt[me]!=null?'ベット '+S.bt[me]:''),(pendOf(me)?'保留中 '+pendOf(me):''),debtInfo(me)].filter(Boolean).join('<br>');
+ const L=lb?smb('初期コイン','開始額を変更',isH()?'initSheet()':'','初期コインは代表者だけが変えられます'):(rl&&isH())?smb('ベット','賭け・上乗せ','betSheet()',''):smb('コイン','送金・借入・親',pr?'coinMenu()':'','コインのやり取りは、準備フェーズだけです');
  const R=bk?smb(bk[0],bk[2],bk[1]):smb('戻す','直前の操作を取消','','いま戻せる操作はありません');
  const B=md?`<button class=big onclick='${mf}'>${mt}</button>`:`<div class="big wait">${mt}</div>`;
- $('#app').innerHTML=`<div class=top><div class=tl><div class=ttl>${TT[S.ph]}</div>${stp?`<div class=st>${stp}</div>`:''}</div><div class=rc>ルーム<b>${S.id}</b></div><button class=ib onclick="menu()">☰${nb?`<span class=bg>${nb}</span>`:''}</button></div>
+ $('#app').innerHTML=`<div class=top><div class=tl><div class=ttl>${TT[S.ph]}</div>${stp?`<div class=st>${stp}</div>`:''}</div><div class=rc>ルーム<b>${S.id}</b></div><button class=ib onclick="menu()">☰${nb+S.pd.length?`<span class=bg>${nb+S.pd.length}</span>`:''}</button></div>
  <div class=mc id=mycard><div><div class=mlab>あなたのコイン${isH()?' (代表)':''}${S.hs.o===me?' (親)':''}</div><div class="mnum ${cls}">${P().c}</div></div><div class=msub>${sub}</div></div>
- ${nb?`<div class=notice onclick="reqs()">申請が${nb}件 届いています(タップで確認)</div>`:''}<div class=msg>${msg()}</div>
- <div class=mid>${lb?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+(S.ic||10000)+'</div>':''}${pots?`<div class=pots>${pots}</div>`:''}${oth||'<div class=emp>ほかの参加者を待っています。<br>☰の「ルームを共有」で招待できます</div>'}</div>
- <div class=bar>${L}<div class=bw>${B}<div class=cap>${mcap}</div></div>${R}</div>`;after(old,nw,OP)}
+ ${nb?`<div class=notice onclick="logSheet('open')">あなた宛ての申請が${nb}件 あります(タップで確認)</div>`:''}<div class=msg>${msg()}</div>
+ <div class=mid>${lb?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+(S.ic||10000)+'</div>':''}${rl?rwPanel():''}${pots?`<div class=pots>${pots}</div>`:''}${pdl}${oth||'<div class=emp>ほかの参加者を待っています。<br>☰の「ルームを共有」で招待できます</div>'}</div>
+ <div class=bar>${L}<div class=bw>${B}<div class=cap>${mcap}</div></div>${R}</div>`;if(rl)wheelAnim();after(old,nw,OP)}
 const RM=()=>{try{return window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
-function snap(){const c={},b={};let bt=0;Object.keys(S.p).forEach(k=>{c[k]=S.p[k].c;b[k]=S.p[k].b});Object.values(S.bt||{}).forEach(v=>bt+=v);return{c:c,b:b,pot:bt,house:S.hs.c}}
+function snap(){const c={},b={};let bt=0;Object.keys(S.p).forEach(k=>{c[k]=S.p[k].c;b[k]=S.p[k].b});Object.values(S.bt||{}).forEach(v=>bt+=v);return{c:c,b:b,pot:bt,house:S.hs.c,pend:(S.pd||[]).reduce((a,r)=>a+pdSum(r),0)}}
 function flows(o,n){const D={};let bk=0;Object.keys(n.c).forEach(k=>{if(k in o.c){const d=n.c[k]-o.c[k];if(d)D[k]=d;bk-=n.b[k]-o.b[k]}});
- if(n.pot!==o.pot)D.pot=n.pot-o.pot;if(n.house!==o.house)D.house=n.house-o.house;if(bk)D.bank=bk;
+ if(n.pot!==o.pot)D.pot=n.pot-o.pot;if(n.house!==o.house)D.house=n.house-o.house;if((n.pend||0)!==(o.pend||0))D.pend=(n.pend||0)-(o.pend||0);if(bk)D.bank=bk;
  const src=[],snk=[];Object.keys(D).forEach(k=>(D[k]<0?src:snk).push([k,Math.abs(D[k])]));
  const out=[];while(src.length&&snk.length&&out.length<6){const m=Math.min(src[0][1],snk[0][1]);out.push([src[0][0],snk[0][0],m]);src[0][1]-=m;snk[0][1]-=m;if(!src[0][1])src.shift();if(!snk[0][1])snk.shift()}return out}
 function pt(sel){const e=document.querySelector(sel);if(!e)return null;const r=e.getBoundingClientRect();return r.width?{x:r.left+r.width/2,y:r.top+r.height/2,s:sel}:null}
-function anchors(){const o={pot:pt('#potbox'),house:pt('#hsbox'),bank:pt('.top .ttl')};Object.keys(S.p).forEach(k=>o[k]=pt(k===me?'#mycard':'.row[data-k="'+k+'"]'));return o}
+function anchors(){const o={pot:pt('#potbox'),house:pt('#hsbox'),pend:pt('.pd'),bank:pt('.top .ttl')};Object.keys(S.p).forEach(k=>o[k]=pt(k===me?'#mycard':'.row[data-k="'+k+'"]'));return o}
 function fly(a,b,n){for(let i=0;i<n;i++){if(document.querySelectorAll('.cn').length>40)return;const e=document.createElement('div');e.className='cn';e.style.left=(a.x-12)+'px';e.style.top=(a.y-12)+'px';document.body.appendChild(e);
  if(!e.animate){e.remove();continue}
  const dx=b.x-a.x,dy=b.y-a.y,jx=(Math.random()-.5)*30,ar=-30-Math.random()*30;
@@ -147,44 +190,105 @@ function fly(a,b,n){for(let i=0;i<n;i++){if(document.querySelectorAll('.cn').len
 function tween(el,a,b,delay){if(!el)return;const id=++twT;el.textContent=a;const t0=performance.now()+delay,D=600;
  (function f(t){if(id!==twT||!el.isConnected)return;const p=Math.min(1,Math.max(0,(t-t0)/D)),e=1-Math.pow(1-p,3);el.textContent=Math.round(a+(b-a)*e);if(p<1)requestAnimationFrame(f)})(performance.now());
  setTimeout(()=>{if(id===twT&&el.isConnected)el.textContent=b},delay+D+250)}
-function after(old,nw,OP){if(!old||RM())return;const oc=old.c[me];if(oc!=null&&oc!==nw.c[me])tween($('.mnum'),oc,nw.c[me],nw.c[me]>oc?450:0);
+function after(old,nw,OP){if(SPQ){const q=SPQ;SPQ=null;startSpin(q.sp,q.oc);return}if(SPINON||!old||RM())return;const oc=old.c[me];if(oc!=null&&oc!==nw.c[me])tween($('.mnum'),oc,nw.c[me],nw.c[me]>oc?450:0);
  const fl=flows(old,nw);if(!fl.length)return;const NP=anchors(),mid={x:innerWidth/2,y:innerHeight/2};
  fl.forEach((f,j)=>{const a=OP[f[0]]||NP[f[0]]||mid,b=NP[f[1]]||OP[f[1]]||mid,n=Math.min(8,Math.max(1,Math.round(Math.log10(Math.max(f[2],1))*1.5)-1));setTimeout(()=>fly(a,b,n),j*120)})}
+const WC=['#ef476f','#ffa62b','#06d6a0','#118ab2','#9b5de5','#f15bb5','#8ac926','#00bbf9'];
+const colOf=k=>{const i=S?Object.keys(S.p).indexOf(k):-1;return WC[(i<0?0:i)%8]};
+const slOf=bt=>Object.keys(S.p).filter(k=>bt[k]>0).map(k=>[k,bt[k],colOf(k),S.p[k].n]);
+const pct=(a,t)=>t?Math.round(a/t*1000)/10:0;
+function arc(c,r,a0,a1){const f=a=>[c+r*Math.sin(a*6.28318),c-r*Math.cos(a*6.28318)],p=f(a0),q=f(a1);return'M'+c+' '+c+' L'+p[0].toFixed(2)+' '+p[1].toFixed(2)+' A'+r+' '+r+' 0 '+((a1-a0)>.5?1:0)+' 1 '+q[0].toFixed(2)+' '+q[1].toFixed(2)+' Z'}
+function wsvg(sl,o){o=o||{};const tot=sl.reduce((a,x)=>a+x[1],0);let a=0,h='';
+ if(!tot)return'<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="98" fill="#cfe3fb"/><text x="100" y="106" text-anchor="middle" font-size="15" font-weight="700" fill="#456691">ベット待ち</text></svg>';
+ if(sl.length===1)h+='<circle cx="100" cy="100" r="98" fill="'+sl[0][2]+'"/>';
+ else sl.forEach(x=>{const b=a+x[1]/tot,m=(a+b)/2,win=o.win===x[0],dim=o.win&&!win,dx=win?Math.sin(m*6.28318)*7:0,dy=win?-Math.cos(m*6.28318)*7:0;
+  h+='<path d="'+arc(100,98,a,b)+'" fill="'+x[2]+'" stroke="#fff" stroke-width="2" opacity="'+(dim?.35:1)+'" transform="translate('+dx.toFixed(1)+' '+dy.toFixed(1)+')"'+(win?' style="filter:drop-shadow(0 0 7px #fff)"':'')+'/>';a=b});
+ a=0;sl.forEach(x=>{const f=x[1]/tot,m=a+f/2;a+=f;if(f>=.07){const xx=100+62*Math.sin(m*6.28318),yy=100-62*Math.cos(m*6.28318);h+='<text x="'+xx.toFixed(1)+'" y="'+(yy+5).toFixed(1)+'" text-anchor="middle" font-size="'+(f>.15?15:12)+'" font-weight="700" fill="#fff" style="paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:3px">'+esc(String(x[3]||'').slice(0,4))+'</text>'}});
+ for(let i=0;i<24;i++){const t=i/24*6.28318;h+='<circle cx="'+(100+98*Math.sin(t)).toFixed(1)+'" cy="'+(100-98*Math.cos(t)).toFixed(1)+'" r="2.2" fill="#ffe28a"/>'}
+ return'<svg viewBox="0 0 200 200">'+h+'<circle cx="100" cy="100" r="17" fill="#ffc83d" stroke="#b87800" stroke-width="3"/></svg>'}
+function rwPanel(){const sl=slOf(S.bt),tot=sl.reduce((a,x)=>a+x[1],0);
+ return`<div class=rw><div class=wp><div class=ptr></div><div id=wheel class=wh>${wsvg(sl)}</div></div><div class=lgd>${sl.length?sl.map(x=>`<div class=lr><i style="background:${x[2]}"></i><span>${esc(x[3])}</span><b>${pct(x[1],tot)}%</b><small>${x[1]}</small></div>`).join(''):'<div class=emp style="padding:6px 0">まだ誰も賭けていません</div>'}<div class=lt>ポット ${tot}</div></div></div>`}
+function wheelAnim(){const el=$('#wheel');if(!el)return;const to=S.bt,fr=WP||{},ks=Object.keys(S.p),id=++wTw;if(RM()){WP=Object.assign({},to);return}
+ const t0=performance.now();(function f(t){if(id!==wTw||!el.isConnected)return;const p=Math.min(1,(t-t0)/380),e=1-Math.pow(1-p,3);
+  el.innerHTML=wsvg(ks.map(k=>[k,(fr[k]||0)+((to[k]||0)-(fr[k]||0))*e,colOf(k),S.p[k].n]).filter(x=>x[1]>.0001));if(p<1)requestAnimationFrame(f);else WP=Object.assign({},to)})(t0)}
+function pvUpd(){const el=$('#pvw'),t=$('#pvt');if(!el)return;const add=Math.max(0,Math.floor(+($('#fa').value)||0)),bt=Object.assign({},S.bt);bt[me]=(bt[me]||0)+add;
+ const sl=slOf(bt),tot=sl.reduce((a,x)=>a+x[1],0);el.innerHTML=wsvg(sl);const my=bt[me]||0;t.innerHTML='あなたの当たる確率<br><b>'+pct(my,tot)+'%</b><br><small>ポット '+tot+(S.bt[me]?'(いま '+pct(S.bt[me],Object.values(S.bt).reduce((a,b)=>a+b,0))+'%)':'')+'</small>'}
+function confetti(box,n){for(let i=0;i<n;i++){const c=document.createElement('div');c.className='sp-c';c.style.left=(Math.random()*100)+'%';c.style.animationDelay=(Math.random()*.9)+'s';c.style.animationDuration=(1.4+Math.random()*1)+'s';box.appendChild(c);setTimeout(()=>c.remove(),3500)}}
+function startSpin(sp,oc){try{
+ const sl=sp.sl.map(x=>[x[0],x[2],colOf(x[0]),x[1]]),tot=sl.reduce((a,x)=>a+x[1],0),SD=window.__SD||1,Wd=350*SD,D=5600*SD,K=6+Math.floor(Math.random()*2),Rf=360*K-sp.f*360,R0=-10,N=300,cum=[0];
+ const ov=document.createElement('div');ov.id='spin';ov.innerHTML='<div class=sp-rays></div><div class=sp-stage id=sps><div class=sp-ptr id=spp></div><div class=sp-wheel id=spw>'+wsvg(sl)+'</div></div><div class=sp-ttl id=spt>ルーレット</div><div class=sp-res id=spr></div><div class=sp-flash id=spf></div>';document.body.appendChild(ov);
+ for(let i=1;i<=N;i++){const p=i/N,x=Math.min(p/.05,1);cum.push(cum[i-1]+x*x*(3-2*x)*Math.pow(1-p,3.4))}
+ const g=p=>{const x=p*N,i=Math.min(N-1,Math.floor(x));return(cum[i]+(cum[i+1]-cum[i])*(x-i))/cum[N]};
+ const spw=$('#spw'),spp=$('#spp'),sps=$('#sps'),spf=$('#spf'),spt=$('#spt'),spr=$('#spr');let lastI=-1,lastR=0,lastT=performance.now(),t0=lastT,fin=false,shut=false;
+ const ang=t=>t<Wd?R0*Math.sin(t/Wd*Math.PI/2):R0+(Rf-R0)*g(Math.min(1,(t-Wd)/D));
+ const flash=()=>{spf.className='sp-flash';void spf.offsetWidth;spf.className='sp-flash go'},shake=()=>{sps.classList.remove('shk');void sps.offsetWidth;sps.classList.add('shk')};
+ const close=()=>{if(shut)return;shut=true;ov.classList.add('out');setTimeout(()=>{ov.remove();landCoins(sp,oc)},400*SD+20)};
+ const finish=()=>{fin=true;spw.style.filter='';spw.style.transform='rotate('+Rf+'deg)';spw.innerHTML=wsvg(sl,{win:sp.w});sps.style.transform='scale(1.08)';flash();shake();spt.textContent='';
+  spr.innerHTML='<div class=sp-nm style="color:'+colOf(sp.w)+'">'+esc(sp.wn)+'</div><div class=sp-w>の勝ち!</div><div class=sp-amt>ポット '+sp.tot+' を総取り</div>';confetti(ov,46);setTimeout(close,3000*SD);ov.onclick=close};
+ const fr=now=>{if(shut)return;const t=now-t0,R=ang(t),dt=Math.max(1,now-lastT),spd=Math.abs(R-lastR)/dt*1000;lastR=R;lastT=now;
+  spw.style.transform='rotate('+R+'deg)';spw.style.filter=spd>1100?'blur(2.2px)':spd>600?'blur(1px)':'';
+  const u=((-R/360)%1+1)%1;let a=0,ix=sl.length-1;for(let i=0;i<sl.length;i++){a+=sl[i][1]/tot;if(u<a){ix=i;break}}
+  if(ix!==lastI){lastI=ix;spp.classList.remove('tk');void spp.offsetWidth;spp.classList.add('tk')}
+  const p=Math.min(1,Math.max(0,(t-Wd)/D)),z=p>.72?(p-.72)/.28:0;sps.style.transform='scale('+(1+.09*z*z*(3-2*z))+')';
+  if(t<Wd+D)requestAnimationFrame(fr);else if(!fin)finish()};
+ flash();shake();requestAnimationFrame(fr);setTimeout(()=>{if(!shut){if(!fin)finish();close()}},(Wd+D+3000+2500)*SD+1500);
+ }catch(e){SPINON=false}}
+function landCoins(sp,oc){SPINON=false;if(!S||!S.p[me])return;const nw=S.p[me].c,a={x:innerWidth/2,y:innerHeight/2},tg=sp.w===me?'#mycard':'.row[data-k="'+sp.w+'"]',b=pt(tg)||a;
+ if(!RM())fly(a,b,Math.min(8,Math.max(3,Math.round(Math.log10(Math.max(sp.tot,1))*1.5))));
+ const r=document.querySelector('.row[data-k="'+sp.w+'"]');if(r&&!RM()){r.classList.remove('fl');void r.offsetWidth;r.classList.add('fl')}
+ if(oc!=null&&oc!==nw&&!RM())tween($('.mnum'),oc,nw,350)}
 function canBet(){return!(S.md==='house'&&S.hs.o===me)&&P().c>0}
 function mainBtn(){const h=isH();
  if(S.ph==='lobby')return h?['ゲーム開始','act("startGame")',1,'準備フェーズに進みます']:['開始待ち','',0,'代表者が始めるまで待ちます'];
  if(S.ph==='prep')return h?['賭けを始める','startSheet()',1,'賭け方を選んで、ベットの時間へ']:['待機中','',0,'代表者が賭けを始めます'];
+ if(S.ph==='bet'&&S.md==='roulette'){const n=Object.keys(S.bt).length;if(h)return n>=2?['回す','if(confirm("ルーレットを回します。回すと取り消せません。よろしいですか?"))act("spin")',1,'勝者を決めます(取消不可)']:['回す','',0,'2人以上のベットが必要です'];return canBet()?[S.bt[me]==null?'ベットする':'上乗せする','betSheet()',1,S.bt[me]==null?'金額を決めて参加します':'賭け額を増やします']:['残高がありません','',0,'ベットできません']}
  if(S.ph==='bet'){if(S.bt[me]==null&&canBet())return['ベットする','betSheet()',1,'金額を入れて確定します'];return h?['締め切る','act("close")',1,'ベットを確定して結果入力へ']:[S.bt[me]!=null?'ベット済み':S.hs.o===me&&S.md==='house'?'親は待機中':'残高がありません','',0,'ほかの人のベットを待っています']}
  const ok=S.md==='house'?(me===S.hs.o||h):h;return ok?['結果を入力','resSheet()',1,'配分を決めて、準備に戻ります']:['結果待ち','',0,'結果の入力を待っています']}
 function backBtn(){if(S.ph==='bet')return isH()?['全員に返す','if(confirm("全員のベットを返しますか?"))act("cancel")','ベットを全員へ返却']:(S.bt[me]!=null?['取り消す','act("withdraw")','自分のベットを戻す']:null);
- return S.hp&&(S.lp===me||isH())?['戻す','act("undo")','直前の操作を取消']:null}
+ return S.hp&&(S.lp===me||isH())?['戻す','act("undo")',S.lx?S.lx+' を取消':'直前の操作を取消']:null}
 function sheet(h){$('#sh').innerHTML='<div class=bd onclick="closeSheet()"></div><div class=pn>'+h+'<div class=hint>外をタップで閉じる</div></div>';$('#sh').hidden=false}
 function closeSheet(){$('#sh').hidden=true}
-function coinMenu(){const o=S.hs.o===me;sheet(`<h3>コイン</h3><div class=g><button onclick="fm('send')">送金する</button><button onclick="fm('lend')">貸す</button><button onclick="fm('borrow')">借りる</button><button onclick="fm('repay')">返す</button><button class=ln onclick="bank('borrow')">銀行から${S.ic||10000}借りる</button><button class=ln onclick="bank('repay')">銀行へ${S.ic||10000}返す</button>${!S.hs.o?`<button onclick="fm('take')">親になる</button>`:o?`<button onclick="closeSheet();act('drop')">親を降りる</button>`:''}</div>`)}
-function fm(k){const T={send:'送金する',lend:'貸す',borrow:'借りる',repay:'返す',take:'親になる(ハウスへ入れる額)'}[k];
- if(k!=='take'&&!opts())return toast('ほかの参加者がいません');
- sheet(`<h3>${T}</h3>${k==='take'?'':`<label>相手</label><select id=fp>${opts()}</select>`}<label>金額</label><input id=fa type=number inputmode=numeric><button class=ok onclick="fok('${k}')">${k==='take'?'入金して親になる':'申請する'}</button>${k==='take'||k==='repay'?'':'<small>相手が承認すると成立します</small>'}`)}
-function fok(k){const a=+$('#fa').value,t=$('#fp')?$('#fp').value:null;closeSheet();act(k,{to:t,amt:a})}
+function coinMenu(){const o=S.hs.o===me,K={send:'送る',lend:'貸す',borrow:'借りる',repay:'返す'},ot=opts();
+ sheet(`<h3>コイン</h3>${ot?`<div class=seg>${Object.keys(K).map(k=>`<button class="${k===FK?'':'ln'}" data-k=${k} onclick="setK('${k}')">${K[k]}</button>`).join('')}</div><label>相手</label><select id=fp>${ot}</select><label>金額</label><input id=fa type=number inputmode=numeric><button class=ok onclick="fok()">申請する</button><small id=fn></small>`:'<p>ほかの参加者がいません</p>'}<div class=g style="margin-top:8px"><button class=ln onclick="bank('borrow')">銀行から${S.ic||10000}借りる</button><button class=ln onclick="bank('repay')">銀行へ${S.ic||10000}返す</button>${!S.hs.o?`<button onclick="fm()">親になる</button>`:o?`<button onclick="closeSheet();act('drop')">親を降りる</button>`:''}</div>`);setK(FK)}
+function setK(k){FK=k;document.querySelectorAll('.seg button').forEach(b=>b.className=b.dataset.k===k?'':'ln');const n=$('#fn');if(n)n.textContent='相手が承認すると成立します'}
+function fm(){sheet(`<h3>親になる(ハウスへ入れる額)</h3><label>金額</label><input id=fa type=number inputmode=numeric><button class=ok onclick="fokT()">入金して親になる</button>`)}
+function fok(){const a=+$('#fa').value,t=$('#fp')?$('#fp').value:null;closeSheet();act(FK,{to:t,amt:a})}
+function fokT(){const a=+$('#fa').value;closeSheet();act('take',{amt:a})}
 function bank(d){closeSheet();act('bank',{d:d})}
 function initSheet(){sheet(`<h3>初期コイン</h3><p>全員のスタート時のコインです。ゲーム開始前に決めます(いまは ${S.ic||10000})。銀行から借りられる1回の額も、この額になります。</p><input id=fa type=number inputmode=numeric value="${S.ic||10000}"><button class=ok onclick="closeSheet();act('setInit',{amt:+$('#fa').value})">この額に変更</button>`)}
 function startSheet(){sheet(`<h3>賭けを始める</h3><button class=ok onclick="closeSheet();act('start',{md:'game'})">ゲームポット(ポーカーなど)</button><button onclick="${S.hs.o?'startH()':'needHouse()'}">倍率(親と勝負)</button>`)}
 function startH(){closeSheet();act('start',{md:'house'})}
-function needHouse(){sheet(`<h3>先に親が必要です</h3><p>倍率は、親(胴元)と勝負するモードです。親になる人が、準備フェーズの「コイン → 親になる」で、ハウスにコインを入れてから始めます。</p><button class=ok onclick="fm('take')">自分が親になる</button><button class=ln onclick="startSheet()">戻る</button>`)}
-function betSheet(){const c=P().c;sheet(`<h3>ベット(${MIN}以上 / 残高${c})</h3><input id=fa type=number inputmode=numeric value="${Math.min(MIN,c)}">${canBet()?`<button class=ok onclick="closeSheet();act('bet',{amt:+$('#fa').value})">ベットする</button>`:''}${isH()?`<button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`)}
-function resSheet(){const ids=Object.keys(S.bt);
- if(S.md==='game')return sheet(`<h3>配分(ポット ${pot()})</h3>${Object.keys(S.p).map(k=>`<div class=r2><span>${esc(S.p[k].n)}</span><input class=al data-k=${k} type=number inputmode=numeric placeholder=0 oninput=sum()><button class="ln w" onclick="all1('${k}')">総取り</button></div>`).join('')}<div id=sm></div><button class=ok onclick="resG()">配分を確定</button>`)||sum();
- sheet(`<h3>結果(倍率)</h3>${ids.map(k=>`<div class=r2><span>${esc(S.p[k].n)} ${S.bt[k]}</span><select data-k=${k} class=rs><option value=l>ハズレ</option><option value=w>当たり</option><option value=d>引分</option></select><input class="w rm" data-k=${k} type=number step=any value=2></div>`).join('')}<small>当たり = ベット×倍率をハウスから払います(足りなければ払える分まで)</small><button class=ok onclick="resH()">結果を確定</button>`)}
-function sum(){const t=[...document.querySelectorAll('.al')].reduce((a,i)=>a+(+i.value||0),0);$('#sm').textContent='合計 '+t+' / '+pot()}
-function all1(k){document.querySelectorAll('.al').forEach(i=>i.value=i.dataset.k===k?pot():'');sum()}
-function resG(){const al={};document.querySelectorAll('.al').forEach(i=>al[i.dataset.k]=Math.round(+i.value||0));closeSheet();act('resG',{al:al})}
-function resH(){const rs={};document.querySelectorAll('.rs').forEach(i=>rs[i.dataset.k]={r:i.value,m:+document.querySelector('.rm[data-k="'+i.dataset.k+'"]').value});closeSheet();act('resH',{rs:rs})}
-function menu(){sheet(`<h3>メニュー</h3><button onclick="reqs()">申請${mine().length?'('+mine().length+'件)':''}</button><button onclick="hist()">履歴</button><button onclick="share()">ルームを共有</button>${isH()&&Object.keys(S.p).length>1?`<button onclick="giveSheet()">代表者を移す</button>`:''}${S.ph==='prep'||S.ph==='lobby'?`<button class=ln onclick="if(confirm('退出しますか?'))leave()">退出</button>`:''}${isH()&&S.ph==='prep'?`<button class=dg onclick="if(confirm('最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?')){closeSheet();act('settle')}">最終精算</button>`:''}`)}
+function needHouse(){sheet(`<h3>先に親が必要です</h3><p>倍率は、親(胴元)と勝負するモードです。親になる人が、準備フェーズの「コイン → 親になる」で、ハウスにコインを入れてから始めます。</p><button class=ok onclick="fm()">自分が親になる</button><button class=ln onclick="startSheet()">戻る</button>`)}
+function betSheet(){const c=P().c,ro=S.md==='roulette',mb=S.bt[me];
+ sheet(`<h3>${ro&&mb!=null?'上乗せ(いま '+mb+' / 残高 '+c+')':'ベット('+MIN+'以上 / 残高'+c+')'}</h3>${ro?'<div class=pv><div class=wp style="width:120px"><div class=ptr></div><div id=pvw class=wh></div></div><div id=pvt class=pvt></div></div>':''}<input id=fa type=number inputmode=numeric value="${Math.min(MIN,c)}"${ro?' oninput=pvUpd()':''}>${canBet()?`<button class=ok onclick="closeSheet();act('bet',{amt:+$('#fa').value})">${ro&&mb!=null?'上乗せする':'ベットする'}</button>`:''}${isH()&&!ro?`<details class=dt><summary>代表者の操作</summary><button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button></details>`:''}${isH()&&ro?`<details class=dt><summary>代表者の操作</summary><button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button></details>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`);if(ro)pvUpd()}
+function resSheet(id){const r=id?S.pd.find(x=>x.id===id):null;if(id&&!r)return toast('保留が見つかりません');
+ const bt=r?r.bt:S.bt,md=r?r.md:S.md;RP=Object.values(bt).reduce((a,b)=>a+b,0);const hd=id?'':`<button class=ln onclick="hold()">あとで入力する(保留)</button>`;
+ if(md==='game')return sheet(`<h3>配分(ポット ${RP})</h3><div id=sm class=rem></div><small>名前をタップで総取り / 「残り→」でその人に残り全部</small>${Object.keys(S.p).map(k=>`<div class=r2><button class=ln onclick="all1('${k}')">${esc(S.p[k].n)}</button><input class=al data-k=${k} type=number inputmode=numeric placeholder=0 oninput=sum()><button class="ln w" onclick="rest('${k}')">残り→</button></div>`).join('')}<button class=ok id=okb onclick="resG('${id||''}')">配分を確定</button>${hd}`)||sum();
+ sheet(`<h3>結果(倍率)</h3>${Object.keys(bt).map(k=>`<div class=hr data-k=${k}><div>${esc(S.p[k].n)} ${bt[k]}</div><div class=seg3><button data-v=l onclick="pickR(this)">ハズレ</button><button class=ln data-v=w onclick="pickR(this)">当たり</button><button class=ln data-v=d onclick="pickR(this)">引分</button></div><input class=rm type=number step=any value=2 hidden></div>`).join('')}<small>当たり = ベット×倍率をハウスから払います(足りなければ払える分まで)</small><button class=ok onclick="resH('${id||''}')">結果を確定</button>${hd}`)}
+function sum(){const t=[...document.querySelectorAll('.al')].reduce((a,i)=>a+(+i.value||0),0),r=RP-t,e=$('#sm');if(!e)return;e.textContent='残り '+r;e.style.color=r===0?'#1a9d57':r<0?'#d9412f':'';const b=$('#okb');if(b)b.disabled=r!==0}
+function all1(k){document.querySelectorAll('.al').forEach(i=>i.value=i.dataset.k===k?RP:'');sum()}
+function rest(k){const ins=[...document.querySelectorAll('.al')],r=RP-ins.reduce((a,i)=>a+(+i.value||0),0),i=ins.find(x=>x.dataset.k===k);if(i&&r>0)i.value=(+i.value||0)+r;sum()}
+function pickR(b){b.parentNode.querySelectorAll('button').forEach(x=>x.className=x===b?'':'ln');b.closest('.hr').querySelector('.rm').hidden=b.dataset.v!=='w'}
+function hold(){closeSheet();act('hold')}
+function resG(id){const al={};document.querySelectorAll('.al').forEach(i=>al[i.dataset.k]=Math.round(+i.value||0));closeSheet();id?act('resP',{id:id,al:al}):act('resG',{al:al})}
+function resH(id){const rs={};document.querySelectorAll('.hr').forEach(h=>{const v=h.querySelector('.seg3 button:not(.ln)');rs[h.dataset.k]={r:v?v.dataset.v:'l',m:+h.querySelector('.rm').value}});closeSheet();id?act('resP',{id:id,rs:rs}):act('resH',{rs:rs})}
+function menu(){const u=openN();sheet(`<h3>メニュー</h3><button onclick="logSheet()">ログ${u?'(未'+u+'件)':''}</button>${isH()&&S.ph==='prep'?`<button onclick="miniSheet()">ミニゲーム</button>`:''}<button onclick="share()">ルームを共有</button>${isH()&&Object.keys(S.p).length>1?`<button onclick="giveSheet()">代表者を移す</button>`:''}${S.ph==='prep'||S.ph==='lobby'?`<button class=ln onclick="if(confirm('退出しますか?'))leave()">退出</button>`:''}${isH()&&S.ph==='prep'?`<button class=dg onclick="settleAsk()">最終精算</button>`:''}`)}
+function miniSheet(){sheet(`<h3>ミニゲーム</h3><button class=ok onclick="closeSheet();act('mini',{g:'roulette'})">ルーレット</button><button class=ln disabled>サイコロ(準備中)</button><small>ミニゲームは1回で1ターンです。回したあとは取り消せません</small>`)}
+function settleAsk(){const n=S.pd.length;if(confirm(n?'保留中の賭けが'+n+'件あります。全部返金して、最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?':'最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?')){closeSheet();act('settle',n?{rf:1}:{})}}
+function pendSheet(id){const r=S.pd.find(x=>x.id===id);if(!r)return;const can=canRes(r),pr=S.ph==='prep';
+ sheet(`<h3>ターン${r.n} 保留中(${r.md==='house'?'倍率':'ポット'})</h3><p>ポット ${pdSum(r)}</p>${Object.keys(r.bt).map(k=>`<div class=it>${esc(S.p[k]?S.p[k].n:'?')} <b>${r.bt[k]}</b></div>`).join('')}${can&&pr?`<button class=ok onclick="closeSheet();resSheet('${r.id}')">結果を入力</button>`:can?'<small>結果の入力は、準備フェーズにできます</small>':'<small>結果は'+(r.md==='house'?'親か代表者':'代表者')+'が入力します</small>'}${isH()&&pr?`<button class=dg onclick="if(confirm('この賭けを全員に返金して取りやめますか?')){closeSheet();act('cancelP',{id:'${r.id}'})}">返金して取りやめ</button>`:''}`)}
+function fmtN(n){return Number.isInteger(n)?'ターン'+n:'ターン'+n+'(ターンの間)'}
+function logSheet(f){if(f)LF=f;const all=LF==='all',ls=S.lg.filter(e=>all||e.s===0),G={};ls.forEach(e=>(G[e.n]=G[e.n]||[]).push(e));
+ const ks=Object.keys(G).map(Number).sort((a,b)=>b-a),tm=t=>{if(!t)return'';const d=new Date(t*1000);return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')};
+ const mk=e=>e.s===0?'<span class=mk>未</span>':e.s===2?'<span class="mk x">取消</span>':'<span class="mk dn">済</span>';
+ const ac=e=>{if(e.s!==0)return'';if(e.k==='q'){const r=S.rq.find(x=>x.id===e.r);if(!r)return'';const ot=r.by===r.f?r.t:r.f;return ot===me?`<div class=r2><button class=ok onclick="rq('approve','${r.id}')">承認</button><button class=ln onclick="rq('reject','${r.id}')">断る</button></div>`:r.by===me?`<button class=ln onclick="rq('reject','${r.id}')">取り消す</button>`:''}
+  return S.pd.some(x=>x.id===e.r)?`<button class=ln onclick="pendSheet('${e.r}')">処理する ›</button>`:''};
+ const row=e=>`<div class="it${e.s===2?' xx':''}">${mk(e)}${e.z?`<span class=zz>${esc(e.z)}</span>`:''} ${esc(e.x)}<small>${tm(e.t)}</small>${e.d?'<div class=dl>'+e.d.map(a=>esc(a[0])+' <b class='+(a[1]>0?'pl':'mn')+'>'+(a[1]>0?'+':'')+a[1]+'</b>').join(' / ')+'</div>':''}${ac(e)}</div>`;
+ sheet(`<h3>ログ</h3><div class=seg2><button class="${all?'ln':''}" onclick="logSheet('open')">未だけ</button><button class="${all?'':'ln'}" onclick="logSheet('all')">すべて</button></div>${ks.length?ks.map(n=>`<div class=gh>${fmtN(n)}</div>${G[n].map(row).join('')}`).join(''):'<p>未処理はありません</p>'}${S.lt?`<small>古いログ ${S.lt}件は省略されました</small>`:''}`)}
+async function rq(a,id){await act(a,{id:id});if(S)logSheet()}
 async function leave(){closeSheet();const r=await act('leave');if(r&&!r.err)reset()}
 function giveSheet(){sheet(`<h3>代表者を移す</h3>${Object.keys(S.p).filter(k=>k!==me).map(k=>`<button onclick="giveTo('${k}')">${esc(S.p[k].n)}</button>`).join('')}`)}
 function giveTo(k){if(confirm(S.p[k].n+' さんに代表者を移しますか?')){closeSheet();act('giveHost',{to:k})}}
-function reqs(){const T={send:'送金',lend:'貸し',repay:'返済'};sheet(`<h3>申請</h3>${S.rq.length?S.rq.map(r=>{const o=r.by!==me&&(r.f===me||r.t===me);return`<div class=it>${T[r.k]}: ${esc(S.p[r.f].n)} → ${esc(S.p[r.t].n)} <b>${r.a}</b>${o?`<div class=r2><button class=ok onclick="rq('approve','${r.id}')">承認</button><button class=ln onclick="rq('reject','${r.id}')">断る</button></div>`:r.by===me?`<button class=ln onclick="rq('reject','${r.id}')">取り消す</button>`:''}</div>`}).join(''):'<p>申請はありません</p>'}`)}
-function rq(a,id){closeSheet();act(a,{id:id})}
-function hist(){sheet(`<h3>履歴</h3>${S.lg.map(l=>`<div class=it>${esc(l)}</div>`).join('')}`)}
 async function share(){const u=location.origin+location.pathname+'?room='+S.id;
  try{if(navigator.share)return await navigator.share({title:'コインプラット',text:'ルームコード '+S.id,url:u});await navigator.clipboard.writeText(u);toast('URLをコピーしました')}catch(e){if(e&&e.name==='AbortError')return;sheet(`<h3>ルームコード ${S.id}</h3><input readonly value="${esc(u)}" onclick="this.select()">`)}}
 function copyRes(){const t=(S.res||[]).map((r,i)=>(i+1)+'位 '+r.n+' '+r.f).join(' / ');try{navigator.clipboard.writeText(t).then(()=>toast('結果をコピーしました'),()=>toast('コピーできませんでした'))}catch(e){toast('コピーできませんでした')}}
