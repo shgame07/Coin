@@ -9,6 +9,7 @@ body[data-ph=bet]{--ph:#4b57d6;--ph2:#3640a8}body[data-ph=result]{--ph:#0a88a8;-
 html,body{height:100%;margin:0}body{height:100dvh}
 body{background:var(--bg);color:var(--ink);font-family:"Hiragino Maru Gothic ProN","BIZ UDPGothic","Yu Gothic",sans-serif;font-size:15px;display:flex;flex-direction:column;max-width:520px;margin:auto;padding-top:env(safe-area-inset-top)}
 button,input,select{font:inherit}
+input,select{font-size:16px}
 .top{padding:12px 16px 14px;background:linear-gradient(160deg,var(--ph),var(--ph2));color:#fff;border-radius:0 0 22px 22px;box-shadow:0 6px 16px rgba(21,88,189,.25);transition:background .35s}
 .tr{display:flex;align-items:center;gap:10px}.ttl{flex:1;font-size:22px;font-weight:800}
 .steps{display:flex;gap:6px;margin-top:12px}
@@ -136,11 +137,12 @@ button,input,select{font:inherit}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 @media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.nb:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.3</div><div id="ld" hidden><i></i><span id="ldt">通信中…</span><button id="ldb" hidden onclick="abortReq()">中断</button></div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.31</div><div id="ld" hidden><i></i><span id="ldt">通信中…</span><button id="ldb" hidden onclick="abortReq()">中断</button></div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycby-KUFqf3H0WZ6PSeYMnVZNulAw_swIB0vyCrP2LpX74dKHfnK96QOBavluyepTB76-/exec',MIN=100;
-const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmtC=n=>Number(n).toLocaleString('ja-JP');
+const num=v=>{v=Math.floor(+v);return Number.isFinite(v)?v:0};
 let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0,FK='send',LF='open',RP=0,lastSp=0,SPINON=false,SPQ=null,WP={},wTw=0,CUR=null,UAB=false,fastUntil=0;
 const NET={ok:0,ng:0,ms:0,cf:0,errs:[]};
 const PH={lobby:'待機',prep:'準備',bet:'賭け',result:'結果',ended:'終了'};
@@ -155,7 +157,7 @@ function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeou
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36),sleep=ms=>new Promise(r=>setTimeout(r,ms));
 function netErr(k,m){NET.ng++;NET.errs.unshift({t:Date.now(),k:k});if(NET.errs.length>8)NET.errs.pop();return{err:m+'['+k+']',net:1}}
 async function req(url,opt,tmo,cur){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),tmo),t0=performance.now();if(cur)CUR=ac;
- try{const res=await fetch(url,Object.assign({signal:ac.signal},opt)),tx=await res.text();let j=null;try{j=JSON.parse(tx)}catch(e){}
+ try{const res=await fetch(url,Object.assign({signal:ac.signal,cache:'no-store'},opt)),tx=await res.text();let j=null;try{j=JSON.parse(tx)}catch(e){}
   if(!j||typeof j!=='object')return netErr('応答不正','サーバーが混み合っているか、設定に問題があります');
   NET.ok++;NET.ms=Math.round(performance.now()-t0);return j}
  catch(e){if(e&&e.name==='AbortError')return UAB&&cur?{err:'中断しました',net:1,ua:1}:netErr('時間切れ','応答に時間がかかりすぎました');
@@ -171,11 +173,11 @@ async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;fastUn
 let ldT=null,ldT2=null;function spin(on){clearTimeout(ldT);clearTimeout(ldT2);document.body.classList.toggle('busy',on);$('#ldb').hidden=true;$('#ldt').textContent='通信中…';
  if(on){UAB=false;ldT=setTimeout(()=>$('#ld').hidden=false,250);ldT2=setTimeout(()=>{$('#ldt').textContent='時間がかかっています…';$('#ldb').hidden=false},10000)}else $('#ld').hidden=true}
 function reset(){S=null;me=rid=null;pc=null;PS=null;acked=false;sv(null);closeSheet();home()}
-async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=a==='join'?await postR({a:a,n:name,r:code,q:uid()}):await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.ua)return toast('中断しました');if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
+async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=a==='join'?await postR({a:a,n:name,r:code,q:uid()}):await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.ua)return toast('中断しました');if(r.err)return toast(r.err);if(!r.s||!r.p)return toast('参加に失敗しました。もう一度お試しください');try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
 let NAME='';const savedName=()=>{try{return localStorage.getItem('cmn')||''}catch(e){return''}};
 function home(){NAME=NAME||savedName();document.body.removeAttribute('data-ph');
  $('#app').innerHTML=`<div class=home><div class=hero><span class=coin2></span><h1>コインプラット</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。<br>実物のコインは、いりません。</p></div>
- <label class=lb>プレイヤー名</label><input id=nm maxlength=12 placeholder="名前を入力" value="${esc(NAME)}">
+ <label class=lb>プレイヤー名</label><input id=nm maxlength=12 placeholder="名前を入力" value="${esc(NAME)}" onkeydown="if(event.key==='Enter')nameOk()">
  <button onclick="nameOk()">決定</button>
  <div class=how><b>はじめかた</b><div class=hs><i>1</i><span>名前を入れて「決定」</span></div><div class=hs><i>2</i><span>ルームを作る(またはコードで参加)</span></div><div class=hs><i>3</i><span>みんなが揃ったら「ゲーム開始」</span></div></div>
  <button class=b2 onclick="guide(home)">📖 使い方を見る(迷ったときはここ)</button></div>`}
@@ -183,7 +185,7 @@ function nameOk(){const n=$('#nm').value.trim();if(!n)return toast('名前を入
 function choose(){const q=new URLSearchParams(location.search).get('room')||'';
  $('#app').innerHTML=`<div class=home><h1>${esc(NAME)} さん</h1><p>ルームを作るか、コードで参加します。</p>
  <button onclick="enter('create',NAME)">ルームを作る<small>あなたが代表者(進行役)になります</small></button><div style="height:20px"></div>
- <label class=lb>ルームコード(4桁)</label><input id=cd inputmode=numeric maxlength=4 placeholder="1234" value="${esc(q)}"><button class=b2 onclick="enter('join',NAME,$('#cd').value)">ルームに参加</button>
+ <label class=lb>ルームコード(4桁)</label><input id=cd inputmode=numeric maxlength=4 placeholder="1234" value="${esc(q)}" onkeydown="if(event.key==='Enter')enter('join',NAME,$('#cd').value)"><button class=b2 onclick="enter('join',NAME,$('#cd').value)">ルームに参加</button>
  <div style="height:20px"></div><button class=b2 onclick="home()">← 名前を変える</button></div>`}
 let GB=null;
 function guide(b){GB=b;$('#app').innerHTML=`<div class=guide><button onclick="GB()">← 戻る</button><h1>使い方</h1>
@@ -230,17 +232,18 @@ function render(){if(!S)return;if(S.phase==='ended'||S.ph==='ended')return ended
  const oth=Object.keys(S.p).filter(k=>k!==me).map(k=>{const p=S.p[k],bt=S.bt&&S.bt[k]!=null,pe=pendOf(k),de=debtInfo(k),bs=S.ph==='bet';
   const tg=(k===S.h?'<span class="tg host">代表</span>':'')+(k===S.hs.o?'<span class="tg oya">親</span>':'')+(bs&&bt?'<span class="tg ok">ベット済 ✓</span>':(bs&&S.md!=='roulette'&&k!==S.hs.o&&p.c>0?'<span class="tg wt">待ち…</span>':''));
   const sm=[bt?'ベット '+fmtC(S.bt[k]):'',pe?'保留 '+fmtC(pe):'',de].filter(Boolean).join(' / ')||(pr?'タップで送る・貸す':'');
-  return`<div class="row${chg.indexOf(k)>=0?' fl':''}" data-k="${k}" onclick="pSheet('${k}')"><div class=av style="background:${avc(k)}">${esc(p.n.slice(0,1))}</div><div class=n><div class=rnm>${esc(p.n)}${tg}</div><small>${sm}</small></div><b>${fmtC(p.c)}</b></div>`}).join('');
+  return`<div class="row${chg.indexOf(k)>=0?' fl':''}" data-k="${k}" onclick="pSheet('${k}')"><div class=av style="background:${avc(k)}">${esc(Array.from(p.n)[0]||'')}</div><div class=n><div class=rnm>${esc(p.n)}${tg}</div><small>${sm}</small></div><b>${fmtC(p.c)}</b></div>`}).join('');
  const sx=['prep','bet','result'],si=sx.indexOf(S.ph),stp=lb?'':`<div class=steps>${sx.map((k,i)=>`<div class="step ${i===si?'on':i<si?'dn':''}"><i>${i<si?'✓':i+1}</i>${PH[k]}</div>`).join('')}</div>`;
  const sub=[(S.bt&&S.bt[me]!=null?'ベット '+fmtC(S.bt[me]):''),(pendOf(me)?'保留中 '+fmtC(pendOf(me)):''),debtInfo(me)].filter(Boolean).join('<br>');
  const L=lb?nb2(IC.c,'初期コイン',isH()?'initSheet()':'','初期コインは代表者だけが変えられます'):(rl&&isH())?nb2(IC.c,'ベット','betSheet()',''):nb2(IC.c,'コイン',pr?'coinMenu()':'','コインのやり取りは、準備フェーズだけです');
  const R=bk?nb2(IC.u,bk[0],bk[1]):nb2(IC.u,'戻す','','いま戻せる操作はありません');
  const B=md?`<button class=big onclick='${mf}'>${mt}</button>`:`<div class="big wait">${mt}</div>`;
+ const sc0=($('.mid')||{}).scrollTop||0;
  $('#app').innerHTML=`<div class=top><div class=tr><div class=ttl>${TT[S.ph]}</div><div class=rc>ルーム<b>${S.id}</b></div><button class=ib onclick="menu()" aria-label="メニュー">☰${nb+S.pd.length?`<span class=bg>${nb+S.pd.length}</span>`:''}</button></div>${stp}</div>
  <div class=mc id=mycard><div><div class=mlab>あなたのコイン${isH()?' (代表)':''}${S.hs.o===me?' (親)':''}</div><div class="mnum ${cls}">${fmtC(P().c)}</div></div><div class=msub>${sub}</div></div>
  ${nb?`<div class=notice onclick="logSheet('open')">あなた宛ての申請が${nb}件 あります(タップで確認)</div>`:''}<div class=msg>${msg()}</div>
  <div class=mid>${lb?'<div class=pot style="margin-bottom:10px">ルームコード<b>'+S.id+'</b>初期コイン '+fmtC(S.ic||10000)+'</div>':''}${rl?rwPanel():''}${pots?`<div class=pots>${pots}</div>`:''}${pdl}${oth||'<div class=emp>ほかの参加者を待っています。<br>☰の「ルームを共有」で招待できます</div>'}</div>
- <div class=bar>${B}<div class=cap>${mcap}</div><div class=nav>${L}${R}</div></div>`;if(rl)wheelAnim();after(old,nw,OP)}
+ <div class=bar>${B}<div class=cap>${mcap}</div><div class=nav>${L}${R}</div></div>`;const mm=$('.mid');if(mm&&sc0)mm.scrollTop=sc0;if(rl)wheelAnim();after(old,nw,OP)}
 const RM=()=>{try{return window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches}catch(e){return false}};
 function snap(){const c={},b={};let bt=0;Object.keys(S.p).forEach(k=>{c[k]=S.p[k].c;b[k]=S.p[k].b});Object.values(S.bt||{}).forEach(v=>bt+=v);return{c:c,b:b,pot:bt,house:S.hs.c,pend:(S.pd||[]).reduce((a,r)=>a+pdSum(r),0)}}
 function flows(o,n){const D={};let bk=0;Object.keys(n.c).forEach(k=>{if(k in o.c){const d=n.c[k]-o.c[k];if(d)D[k]=d;bk-=n.b[k]-o.b[k]}});
@@ -271,7 +274,7 @@ function wsvg(sl,o){o=o||{};const tot=sl.reduce((a,x)=>a+x[1],0);let a=0,h='';
  if(sl.length===1)h+='<circle cx="100" cy="100" r="98" fill="'+sl[0][2]+'"/>';
  else sl.forEach(x=>{const b=a+x[1]/tot,m=(a+b)/2,win=o.win===x[0],dim=o.win&&!win,dx=win?Math.sin(m*6.28318)*7:0,dy=win?-Math.cos(m*6.28318)*7:0;
   h+='<path d="'+arc(100,98,a,b)+'" fill="'+x[2]+'" stroke="#fff" stroke-width="2" opacity="'+(dim?.35:1)+'" transform="translate('+dx.toFixed(1)+' '+dy.toFixed(1)+')"'+(win?' style="filter:drop-shadow(0 0 7px #fff)"':'')+'/>';a=b});
- a=0;sl.forEach(x=>{const f=x[1]/tot,m=a+f/2;a+=f;if(f>=.07){const xx=100+62*Math.sin(m*6.28318),yy=100-62*Math.cos(m*6.28318);h+='<text x="'+xx.toFixed(1)+'" y="'+(yy+5).toFixed(1)+'" text-anchor="middle" font-size="'+(f>.15?15:12)+'" font-weight="700" fill="#fff" style="paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:3px">'+esc(String(x[3]||'').slice(0,4))+'</text>'}});
+ a=0;sl.forEach(x=>{const f=x[1]/tot,m=a+f/2;a+=f;if(f>=.07){const xx=100+62*Math.sin(m*6.28318),yy=100-62*Math.cos(m*6.28318);h+='<text x="'+xx.toFixed(1)+'" y="'+(yy+5).toFixed(1)+'" text-anchor="middle" font-size="'+(f>.15?15:12)+'" font-weight="700" fill="#fff" style="paint-order:stroke;stroke:rgba(0,0,0,.4);stroke-width:3px">'+esc(Array.from(String(x[3]||'')).slice(0,4).join(''))+'</text>'}});
  for(let i=0;i<24;i++){const t=i/24*6.28318;h+='<circle cx="'+(100+98*Math.sin(t)).toFixed(1)+'" cy="'+(100-98*Math.cos(t)).toFixed(1)+'" r="2.2" fill="#ffe28a"/>'}
  return'<svg viewBox="0 0 200 200">'+h+'<circle cx="100" cy="100" r="17" fill="#ffc83d" stroke="#b87800" stroke-width="3"/></svg>'}
 function rwPanel(){const sl=slOf(S.bt),tot=sl.reduce((a,x)=>a+x[1],0);
@@ -326,10 +329,14 @@ function pSheet(k){const p=S.p[k];if(!p)return;const pr=S.ph==='prep',d=debtInfo
  sheet(`<h3>${esc(p.n)} さん</h3><div class=cf>残高 <b>${fmtC(p.c)}</b>${d?'<br>'+d:''}</div>${pr?['send','lend','borrow'].map(x=>`<button class="${x==='send'?'ok':'ln'}" onclick="pk('${x}','${k}')">コインを${KD[x][0]}(${KD[x][1]})</button>`).join(''):'<div class=cf>コインのやり取りは、準備フェーズにできます</div>'}`)}
 function pk(x,k){FK=x;coinMenu();const s=$('#fp');if(s){s.value=k;fnUp()}}
 function fm(){sheet(`<h3>親になる(ハウスへ入れる額)</h3><div class=cf>ハウスに入れたコインが、ほかの人への支払いの元手になります。降りるときに、残りが戻ります。</div><input id=fa class=amt type=number inputmode=numeric placeholder="金額">${chipsH()}<button class=ok onclick="fokT()">入金して親になる</button>`)}
-function fok(){const a=+$('#fa').value,t=$('#fp')?$('#fp').value:null;closeSheet();act(FK,{to:t,amt:a})}
-function fokT(){const a=+$('#fa').value;closeSheet();act('take',{amt:a})}
+function fok(){const a=num($('#fa').value),t=$('#fp')?$('#fp').value:null;
+ if(!t)return toast('相手を選んでください');if(a<1)return toast('金額を入力してください(1以上の整数)');
+ if(FK!=='borrow'&&a>P().c)return toast('残高が足りません');
+ closeSheet();act(FK,{to:t,amt:a})}
+function fokT(){const a=num($('#fa').value);if(a<1)return toast('金額を入力してください(1以上の整数)');if(a>P().c)return toast('残高が足りません');closeSheet();act('take',{amt:a})}
 function bank(d){closeSheet();act('bank',{d:d})}
-function initSheet(){sheet(`<h3>初期コイン</h3><div class=cf>全員のスタート時のコインです。ゲーム開始前に決めます(いまは ${fmtC(S.ic||10000)})。銀行から借りられる1回の額も、この額になります。</div><input id=fa class=amt type=number inputmode=numeric value="${S.ic||10000}"><button class=ok style="margin-top:10px" onclick="closeSheet();act('setInit',{amt:+$('#fa').value})">この額に変更</button>`)}
+function initGo(){const v=num($('#fa').value);if(v<1||v>1e9)return toast('1〜1,000,000,000 の整数で入力してください');closeSheet();act('setInit',{amt:v})}
+function initSheet(){sheet(`<h3>初期コイン</h3><div class=cf>全員のスタート時のコインです。ゲーム開始前に決めます(いまは ${fmtC(S.ic||10000)})。銀行から借りられる1回の額も、この額になります。</div><input id=fa class=amt type=number inputmode=numeric value="${S.ic||10000}"><button class=ok style="margin-top:10px" onclick="initGo()">この額に変更</button>`)}
 function startSheet(){const hs=!!S.hs.o;
  sheet(`<h3>どちらで賭けますか?</h3>
  <button class="mode m1" onclick="closeSheet();act('start',{md:'game'})"><b>👥 みんなで勝負</b><span class=t>プレイヤー同士で勝ち負けを決める</span><small>例: ポーカー・大富豪・ババ抜き<br>全員のベットが「ポット」に集まり、勝った人が受け取ります</small></button>
@@ -337,8 +344,12 @@ function startSheet(){const hs=!!S.hs.o;
  <details class=dt><summary>どっちか迷ったら</summary><div class=ex>・参加者どうしで勝ち負けを決める → <b>みんなで勝負</b><br>・親役がいて、当たり外れで決める → <b>親と勝負</b><br>・それでも迷う → <b>みんなで勝負</b>(結果入力で、人ごとに自由な額を配れます)</div></details>`)}
 function startH(){closeSheet();act('start',{md:'house'})}
 function needHouse(){sheet(`<h3>先に「親」が必要です</h3><div class=cf><b>親と勝負</b>は、親(胴元)が1人いて、ほかの人が親と勝負する賭け方です。親は、ハウスにコインを入れて始めます。</div><div class=ex>手順<br>① 「コイン」→「親になる」<br>② ハウスに入れる額を決める<br>③ もう一度「賭けを始める」→「親と勝負」</div><button class=ok onclick="fm()">自分が親になる</button><button class=ln onclick="startSheet()">← 賭け方を選びなおす</button>`)}
+function betGo(a){const v=num($('#fa').value);
+ if(v<MIN)return toast(MIN+'コイン以上で入力してください');
+ if(a==='bet'&&v>P().c)return toast('残高が足りません。準備フェーズで借りてください');
+ closeSheet();act(a,{amt:v})}
 function betSheet(){const c=P().c,ro=S.md==='roulette',mb=S.bt[me];
- sheet(`<h3>${ro&&mb!=null?'上乗せ(いま '+fmtC(mb)+' / 残高 '+fmtC(c)+')':'ベット('+MIN+'以上 / 残高'+fmtC(c)+')'}</h3>${ro?'<div class=pv><div class=wp style="width:120px"><div class=ptr></div><div id=pvw class=wh></div></div><div id=pvt class=pvt></div></div>':''}<input id=fa class=amt type=number inputmode=numeric value="${Math.min(MIN,c)}"${ro?' oninput=pvUpd()':''}>${chipsH()}${canBet()?`<button class=ok onclick="closeSheet();act('bet',{amt:+$('#fa').value})">${ro&&mb!=null?'上乗せする':'ベットする'}</button>`:''}${isH()&&!ro?`<details class=dt><summary>代表者の操作</summary><button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button></details>`:''}${isH()&&ro?`<details class=dt><summary>代表者の操作</summary><button onclick="closeSheet();act('betAll',{amt:+$('#fa').value})">全員に同じ額を賭けさせる</button></details>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`);if(ro)pvUpd()}
+ sheet(`<h3>${ro&&mb!=null?'上乗せ(いま '+fmtC(mb)+' / 残高 '+fmtC(c)+')':'ベット('+MIN+'以上 / 残高'+fmtC(c)+')'}</h3>${ro?'<div class=pv><div class=wp style="width:120px"><div class=ptr></div><div id=pvw class=wh></div></div><div id=pvt class=pvt></div></div>':''}<input id=fa class=amt type=number inputmode=numeric value="${Math.min(MIN,c)}"${ro?' oninput=pvUpd()':''}>${chipsH()}${canBet()?`<button class=ok onclick="betGo('bet')">${ro&&mb!=null?'上乗せする':'ベットする'}</button>`:''}${isH()&&!ro?`<details class=dt><summary>代表者の操作</summary><button onclick="betGo('betAll')">全員に同じ額を賭けさせる</button><button class=ln onclick="closeSheet();act('close')">ベットせず締め切る</button></details>`:''}${isH()&&ro?`<details class=dt><summary>代表者の操作</summary><button onclick="betGo('betAll')">全員に同じ額を賭けさせる</button></details>`:''}<small>足りないときは「コイン」から借りて、準備フェーズで備えます</small>`);if(ro)pvUpd()}
 function resSheet(id){const r=id?S.pd.find(x=>x.id===id):null;if(id&&!r)return toast('保留が見つかりません');
  const bt=r?r.bt:S.bt,md=r?r.md:S.md;RP=Object.values(bt).reduce((a,b)=>a+b,0);const hd=id?'':`<button class=ln onclick="hold()">あとで入力する(保留)</button>`;
  if(md==='game')return sheet(`<h3>配分を入力(ポット ${fmtC(RP)})</h3><div id=sm class=rem></div><div class=cf>1人ずつ、もらう金額を入れます。合計がポットとぴったり合うと、確定できます。</div><div class=g4><button class=ln onclick="retAll('${id||''}')">全員にベットを返す(引分)</button><button class=ln onclick="splitEq('${id||''}')">ベットした人で均等に分ける</button></div>${Object.keys(bt).concat(Object.keys(S.p).filter(k=>bt[k]==null)).map(k=>`<div class=pr><div class=pt><b>${esc(S.p[k].n)}</b><small>${bt[k]!=null?'ベット '+fmtC(bt[k]):'ベットなし'}</small></div><div class=pi><input class=al data-k=${k} type=number inputmode=numeric placeholder=0 oninput=sum()><button class=ln onclick="all1('${k}')">総取り</button><button class=ln onclick="rest('${k}')">残り→</button></div></div>`).join('')}<button class=ok id=okb onclick="resG('${id||''}')">配分を確定</button>${hd}`)||sum();
@@ -352,7 +363,7 @@ function rest(k){const ins=[...document.querySelectorAll('.al')],r=RP-ins.reduce
 function pickR(b){b.parentNode.querySelectorAll('button').forEach(x=>x.className=x===b?'':'ln');b.closest('.hr').querySelector('.rm').hidden=b.dataset.v!=='w'}
 function hold(){closeSheet();act('hold')}
 function resG(id){const al={};document.querySelectorAll('.al').forEach(i=>al[i.dataset.k]=Math.round(+i.value||0));closeSheet();id?act('resP',{id:id,al:al}):act('resG',{al:al})}
-function resH(id){const rs={};document.querySelectorAll('.hr').forEach(h=>{const v=h.querySelector('.seg3 button:not(.ln)');rs[h.dataset.k]={r:v?v.dataset.v:'l',m:+h.querySelector('.rm').value}});closeSheet();id?act('resP',{id:id,rs:rs}):act('resH',{rs:rs})}
+function resH(id){const rs={};let bad=0;document.querySelectorAll('.hr').forEach(h=>{const v=h.querySelector('.seg3 button:not(.ln)'),r=v?v.dataset.v:'l',m=+h.querySelector('.rm').value;if(r==='w'&&!(m>0))bad=1;rs[h.dataset.k]={r:r,m:m}});if(bad)return toast('当たりの倍率は、0より大きい数にしてください');closeSheet();id?act('resP',{id:id,rs:rs}):act('resH',{rs:rs})}
 function menu(){const u=openN(),h=isH(),pp=S.ph==='prep',lb=S.ph==='lobby',mi=(ic,t,fn,sm)=>`<button class=mi onclick="${fn}"><span class=ic>${ic}</span>${t}${sm?`<small>${sm}</small>`:''}</button>`;
  const g=[h&&pp?mi('🎡','ミニゲーム','miniSheet()','ルーレット'):'',h&&Object.keys(S.p).length>1?mi('👑','代表者を移す','giveSheet()',''):'',pp||lb?mi('🚪','退出',"if(confirm('退出しますか?'))leave()",''):''].join('');
  sheet(`<h3>メニュー</h3><div class=sec>記録・共有</div>${mi('📋','ログ','logSheet()',u?'未 '+u+'件':'')}${mi('🔗','ルームを共有','share()','')}${g?'<div class=sec>ゲーム・ルーム</div>'+g:''}${h&&pp?`<div class=dz><div class=sec>⚠ 取り扱い注意</div><button class=dg onclick="settleAsk()">最終精算(ゲームを終わらせる)</button></div>`:''}<div class=sec>その他</div>${mi('📶','通信の状態','netSheet()','成功 '+NET.ok+' / 失敗 '+NET.ng)}<button class=tiny onclick="forceOut()">この端末だけ抜ける(エラー時用)</button>`)}
@@ -382,20 +393,22 @@ function ended(){closeSheet();const rk=S.res||[];document.body.removeAttribute('
  $('#app').innerHTML=`<div class=home><h1>最終結果</h1><p>借金を引いた最終コイン数です</p>${rk.map((r,i)=>`<div class="row ${r.id===me?'me':''}"><div class=n>${i+1}位 ${esc(r.n)}<small>残高 ${fmtC(r.c)} / 銀行借入 -${fmtC(r.b)}</small></div><b>${fmtC(r.f)}</b></div>`).join('')}<br><button onclick="copyRes()">結果をコピー</button><button class=b2 onclick="reset()">ホームに戻る</button></div>`;
  if(!acked){acked=true;post({a:'ack',r:rid,p:me});rid=null;sv(null)}}
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[type=number]'))setTimeout(()=>{try{e.target.select()}catch(x){}},0)});
-document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('button')){try{navigator.vibrate&&navigator.vibrate(8)}catch(x){}}});
 let polling=false;
-const pollGap=()=>(Date.now()<fastUntil||(S&&S.rq&&S.rq.length))?1500:2500;
+const pollGap=()=>NET.cf>0?Math.min(15000,2500*(NET.cf+1)):(Date.now()<fastUntil||(S&&S.rq&&S.rq.length))?1500:2500;
 async function poll(){if(!rid||busy||!S||polling||document.hidden)return;polling=true;const my=rid;try{const r=await req(API+'?r='+my+'&v='+S.v,{},12000);
  if(r.net){if(++NET.cf===3)toast('通信が不安定です。自動で再接続を試みます');return}NET.cf=0;
  if(!rid||rid!==my||!S||S.ph==='ended')return;
- if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}finally{polling=false}}
+ if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();const oph=S.ph;S=r.s;if(!$('#sh').hidden&&S.ph!==oph)closeSheet();render()}}catch(e){}finally{polling=false}}
 (function tick(){poll();setTimeout(tick,pollGap())})();
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
-async function boot(){const o=ld();if(!(o.rid&&o.me))return home();
+window.addEventListener('online',()=>{NET.cf=0;poll()});
+async function boot(){const o=ld(),q=new URLSearchParams(location.search).get('room')||'';
+ if(o.rid&&o.me&&q&&q!==o.rid&&confirm('別のルーム('+q+')への招待です。\nいまのルーム('+o.rid+')から移動しますか?\n\n※いまのルームには、あとから戻れなくなります。')){sv(null);NAME=savedName();return NAME?choose():home()}
+ if(!(o.rid&&o.me))return home();
  $('#app').innerHTML='<div class=home><p>接続中…</p></div>';
- let r=null;for(let i=0;i<4;i++){const j=await req(API+'?r='+o.rid+'&v=0',{},12000);if(!j.net){r=j;break}await sleep(1500)}
- if(r&&r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}
- if(r){sv(null);return home()}
+ let r=null;for(let i=0;i<4;i++){const j=await req(API+'?r='+o.rid+'&v=0',{},12000);if(!j.net&&!j.busy){r=j;break}await sleep(1500)}
+ if(r&&r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;return render()}
+ if(r&&(r.err==='gone'||r.s)){sv(null);return home()}
  $('#app').innerHTML='<div class=home><h1>接続できません</h1><p>通信が不安定なようです'+(NET.errs[0]?'('+esc(NET.errs[0].k)+')':'')+'。前回のルームの情報は残してあります。</p><button onclick="boot()">もう一度つなぐ</button><div style="height:16px"></div><button class=b2 onclick="sv(null);home()">ホームへ(前回のルームは忘れる)</button></div>'}
 boot();
 </script></body></html>
