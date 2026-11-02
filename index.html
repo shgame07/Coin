@@ -64,7 +64,7 @@ button,input,select{font:inherit}
 .pn label{font-size:13px;display:block;margin:6px 0 2px}
 .hint{text-align:center;font-size:12px;color:var(--mute);margin-top:4px}
 .r2{display:flex;gap:6px;align-items:center}.r2>*{flex:1}.r2 .w{flex:0 0 74px}
-#app{flex:1;display:flex;flex-direction:column;min-height:0}#ver{text-align:center;font-size:11px;color:var(--mute);background:var(--card);padding:4px 0 calc(6px + env(safe-area-inset-bottom))}.home{padding:28px 20px;flex:1;overflow:auto}.lb{display:block;margin:0 0 6px;color:var(--mute);font-size:13px}#ld{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:20;background:var(--card);border:1px solid var(--acc);border-radius:20px;padding:8px 16px;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 6px rgba(15,44,82,.2)}#ld[hidden]{display:none}#ld i{width:14px;height:14px;border:2px solid var(--acc);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}.busy button{opacity:.6;pointer-events:none}.guide{padding:20px;overflow:auto;flex:1}.guide h1{font-size:24px;margin:0 0 12px}.guide section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}.guide h2{margin:0 0 8px;font-size:16px;color:var(--acc)}.guide p,.guide li{font-size:14px;line-height:1.7;margin:0 0 6px}.guide ul{margin:0;padding-left:20px}.guide .rec{border:1px dashed var(--acc);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px;line-height:1.6}.guide>button{width:100%;height:48px;border-radius:12px;border:2px solid var(--acc);background:var(--card);color:var(--acc);font-weight:700;margin-bottom:12px}.home h1{margin:0 0 4px;font-size:28px}.home p{color:var(--mute);margin:0 0 22px}
+#app{flex:1;display:flex;flex-direction:column;min-height:0}#ver{text-align:center;font-size:11px;color:var(--mute);background:var(--card);padding:4px 0 calc(6px + env(safe-area-inset-bottom))}.home{padding:28px 20px;flex:1;overflow:auto}.lb{display:block;margin:0 0 6px;color:var(--mute);font-size:13px}#ld{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:20;background:var(--card);border:1px solid var(--acc);border-radius:20px;padding:8px 16px;font-size:14px;display:flex;gap:8px;align-items:center;box-shadow:0 2px 6px rgba(15,44,82,.2)}#ld[hidden]{display:none}#ld i{width:14px;height:14px;border:2px solid var(--acc);border-top-color:transparent;border-radius:50%;animation:sp .8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}#ld button{pointer-events:auto;opacity:1;height:28px;border-radius:14px;border:1px solid var(--acc);background:#fff;color:var(--acc);padding:0 10px;white-space:nowrap}.busy button{opacity:.6;pointer-events:none}.guide{padding:20px;overflow:auto;flex:1}.guide h1{font-size:24px;margin:0 0 12px}.guide section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}.guide h2{margin:0 0 8px;font-size:16px;color:var(--acc)}.guide p,.guide li{font-size:14px;line-height:1.7;margin:0 0 6px}.guide ul{margin:0;padding-left:20px}.guide .rec{border:1px dashed var(--acc);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:14px;line-height:1.6}.guide>button{width:100%;height:48px;border-radius:12px;border:2px solid var(--acc);background:var(--card);color:var(--acc);font-weight:700;margin-bottom:12px}.home h1{margin:0 0 4px;font-size:28px}.home p{color:var(--mute);margin:0 0 22px}
 .home input{width:100%;height:52px;border-radius:12px;border:2px solid var(--line);padding:0 14px;margin-bottom:10px;background:#fff;color:var(--ink)}
 .home button{width:100%;height:52px;border-radius:12px;border:0;margin-bottom:10px;background:var(--top);color:#fff;font-weight:700;box-shadow:0 3px 0 var(--top2)}
 .home .b2{background:var(--card);color:var(--acc);border:2px solid var(--acc);box-shadow:none}
@@ -95,25 +95,37 @@ button,input,select{font:inherit}
 @media (prefers-reduced-motion:no-preference){.pn{animation:up .18s ease-out}@keyframes up{from{transform:translateY(30px);opacity:.6}}}
 @media (prefers-reduced-motion:reduce){.mnum.up,.mnum.dn,.row.fl,.pop{animation:none}.big:active,.sm:active{transform:none}.cn{display:none}}
 </style></head><body>
-<div id="app"></div><div id="ver">Ver 1.26</div><div id="ld" hidden><i></i>通信中…</div><div id="sh" hidden></div><div id="toast" hidden></div>
+<div id="app"></div><div id="ver">Ver 1.27</div><div id="ld" hidden><i></i><span id="ldt">通信中…</span><button id="ldb" hidden onclick="abortReq()">中断</button></div><div id="sh" hidden></div><div id="toast" hidden></div>
 <script>
 const API='https://script.google.com/macros/s/AKfycby-KUFqf3H0WZ6PSeYMnVZNulAw_swIB0vyCrP2LpX74dKHfnK96QOBavluyepTB76-/exec',MIN=100;
 const $=s=>document.querySelector(s),esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0,FK='send',LF='open',RP=0,lastSp=0,SPINON=false,SPQ=null,WP={},wTw=0;
+let S=null,me=null,rid=null,busy=false,acked=false,pc=null,lockUntil=0,PS=null,twT=0,FK='send',LF='open',RP=0,lastSp=0,SPINON=false,SPQ=null,WP={},wTw=0,CUR=null,UAB=false,fastUntil=0;
+const NET={ok:0,ng:0,ms:0,cf:0,errs:[]};
 const PH={lobby:'待機',prep:'準備',bet:'賭け',result:'結果',ended:'終了'};
 const TT={lobby:'参加受付中',prep:'準備の時間',bet:'賭けの時間',result:'結果の時間'};
 const ld=()=>{try{return JSON.parse(localStorage.getItem('cm'))||{}}catch(e){return{}}};
 const sv=o=>{try{o?localStorage.setItem('cm',JSON.stringify(o)):localStorage.removeItem('cm')}catch(e){}};
 function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
 const uid=()=>Math.random().toString(36).slice(2,10)+Date.now().toString(36),sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function post(o){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),25000);try{const r=await(await fetch(API,{method:'POST',body:JSON.stringify(o),signal:ac.signal})).json();return r&&typeof r==='object'?r:{err:'通信に失敗しました',net:1}}catch(e){return{err:'通信に失敗しました',net:1}}finally{clearTimeout(tm)}}
-async function postR(o,n){n=n||3;let r;for(let i=0;i<n;i++){r=await post(o);if(!r.net)break;if(i<n-1)await sleep(1200)}return r}
-async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;spin(true);const r=await postR(Object.assign({a:a,r:rid,p:me,q:uid()},o));busy=false;lockUntil=Date.now()+200;spin(false);
+function netErr(k,m){NET.ng++;NET.errs.unshift({t:Date.now(),k:k});if(NET.errs.length>8)NET.errs.pop();return{err:m+'['+k+']',net:1}}
+async function req(url,opt,tmo,cur){const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),tmo),t0=performance.now();if(cur)CUR=ac;
+ try{const res=await fetch(url,Object.assign({signal:ac.signal},opt)),tx=await res.text();let j=null;try{j=JSON.parse(tx)}catch(e){}
+  if(!j||typeof j!=='object')return netErr('応答不正','サーバーが混み合っているか、設定に問題があります');
+  NET.ok++;NET.ms=Math.round(performance.now()-t0);return j}
+ catch(e){if(e&&e.name==='AbortError')return UAB&&cur?{err:'中断しました',net:1,ua:1}:netErr('時間切れ','応答に時間がかかりすぎました');
+  return navigator.onLine===false?netErr('電波なし','通信できません。電波を確認してください'):netErr('接続失敗','サーバーにつながりません。混み合っている可能性があります')}
+ finally{clearTimeout(tm)}}
+const post=o=>req(API,{method:'POST',body:JSON.stringify(o)},20000,1);
+async function postR(o,n){n=n||2;let r;for(let i=0;i<n;i++){if(i&&UAB){r={err:'中断しました',net:1,ua:1};break}r=await post(o);if(r.ua||!(r.net||r.busy))break;if(i<n-1)await sleep(1200)}return r}
+function abortReq(){UAB=true;if(CUR)CUR.abort()}
+async function act(a,o={}){if(busy||Date.now()<lockUntil)return;busy=true;fastUntil=Date.now()+8000;spin(true);const r=await postR(Object.assign({a:a,r:rid,p:me,q:uid()},o));busy=false;lockUntil=Date.now()+200;spin(false);
+  if(r.ua){if(rid)toast('中断しました。画面が最新か確認してください');return r}
   if(r.err==='gone'){if(a!=='leave')toast('ルームが見つかりません');return reset()}
   if(r.err)toast(r.err);if(r.s){S=r.s;if(!S.p[me])return r;render()}return r}
-let ldT=null;function spin(on){clearTimeout(ldT);document.body.classList.toggle('busy',on);if(on)ldT=setTimeout(()=>$('#ld').hidden=false,250);else $('#ld').hidden=true}
+let ldT=null,ldT2=null;function spin(on){clearTimeout(ldT);clearTimeout(ldT2);document.body.classList.toggle('busy',on);$('#ldb').hidden=true;$('#ldt').textContent='通信中…';
+ if(on){UAB=false;ldT=setTimeout(()=>$('#ld').hidden=false,250);ldT2=setTimeout(()=>{$('#ldt').textContent='時間がかかっています…';$('#ldb').hidden=false},10000)}else $('#ld').hidden=true}
 function reset(){S=null;me=rid=null;pc=null;PS=null;acked=false;sv(null);closeSheet();home()}
-async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=a==='join'?await postR({a:a,n:name,r:code,q:uid()}):await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
+async function enter(a,name,code){if(busy||Date.now()<lockUntil)return;busy=true;code=String(code||'').replace(/[０-９]/g,c=>String.fromCharCode(c.charCodeAt(0)-65248)).trim();spin(true);const r=a==='join'?await postR({a:a,n:name,r:code,q:uid()}):await post({a:a,n:name,r:code});busy=false;lockUntil=Date.now()+200;spin(false);if(r.ua)return toast('中断しました');if(r.err)return toast(r.err);try{localStorage.setItem('cmn',name)}catch(e){}S=r.s;me=r.p;rid=r.r;sv({rid:rid,me:me});render()}
 let NAME='';const savedName=()=>{try{return localStorage.getItem('cmn')||''}catch(e){return''}};
 function home(){NAME=NAME||savedName();
  $('#app').innerHTML=`<div class=home><h1>コインプラット</h1><p>ポーカーなどのコインを、みんなのスマホで管理します。</p>
@@ -135,11 +147,11 @@ function guide(b){GB=b;$('#app').innerHTML=`<div class=guide><button onclick="GB
 <section><h2>どっちを使う?(おすすめ)</h2><div class=rec><b>ゲームポット がおすすめ</b><br>ポーカー、大富豪、ババ抜きなど、プレイヤー同士で勝ち負けを決めるゲーム</div><div class=rec><b>倍率(親あり) がおすすめ</b><br>ルーレット、サイコロの目当て、ブラックジャック(親がディーラー)、「当たったら2倍」の自作ゲーム</div><p>どちらでも、賭けを始めるときに選べます。</p></section>
 <section><h2>貸し借りと銀行</h2><ul><li><b>送金・貸す・借りる・返す</b>は、申請を出して、相手が承認すると成立します。間違いを防ぐためです。申請は、届くと画面に知らせが出ます。タップすると、ログの「未」から承認できます</li><li><b>銀行</b>は、初期コインと同じ額(初期値は10,000)ずつ、いつでも借りられます。上限も利息もありません。ただし、最終精算でその分が引かれます</li><li>プレイヤー同士の借金は、最終精算で、貸した人に加算、借りた人から減算されます</li></ul></section>
 <section><h2>代表者の役目</h2><p>ルームを作った人が代表者です。ゲーム開始、賭けの開始と締め切り、ポットの配分、最終精算を担当します。「全員に同じ額を賭けさせる」も使えるので、みんながスマホを触らなくても進められます。代表者は、☰メニューの「代表者を移す」で、ほかの人に交代できます。</p></section>
-<section><h2>画面の見方</h2><ul><li><b>上のバー</b>: 今のフェーズ(準備・賭け・結果)と、ルームコード。☰はメニューです</li><li><b>あなたのコイン</b>: 自分の残高です。増えると緑、減ると赤に光り、コインが動いて増減を伝えます</li><li><b>メッセージ</b>: 今なにをする場面か、誰を待っているかを表示します</li><li><b>大きいボタン</b>: 今のフェーズで次にやること。下の小さな文字が、押すと何が起こるかの説明です。押せないときは点線の枠になり、待っている理由が出ます</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: ログ、共有、退出、代表者の移譲、最終精算</li></ul></section>
+<section><h2>画面の見方</h2><ul><li><b>上のバー</b>: 今のフェーズ(準備・賭け・結果)と、ルームコード。☰はメニューです</li><li><b>あなたのコイン</b>: 自分の残高です。増えると緑、減ると赤に光り、コインが動いて増減を伝えます</li><li><b>メッセージ</b>: 今なにをする場面か、誰を待っているかを表示します</li><li><b>大きいボタン</b>: 今のフェーズで次にやること。下の小さな文字が、押すと何が起こるかの説明です。押せないときは点線の枠になり、待っている理由が出ます</li><li><b>左「コイン」</b>: 準備フェーズのやり取り(送金・貸し借り・銀行・親)</li><li><b>右「戻す」</b>: 直前の1操作を取り消します。賭けの最中は、「取り消す」(自分のベット)、代表者は「全員に返す」になります</li><li><b>☰</b>: ログ、共有、退出、代表者の移譲、最終精算、通信の状態</li></ul><p>通信がうまくいかないときは、☰の「通信の状態」で、直近のエラーを確認できます。エラーで何も操作できなくなったときだけ、☰のいちばん下の「この端末だけ抜ける」を使えます(あとから戻ることはできません。コインはルームに残ります)。</p></section>
 <section><h2>ターンとログ</h2><p>賭け→結果の1サイクルを「1ターン」と数えます。準備中の送金・貸し借り・銀行などは、ターンの間として「ターン1.5」のように、見るだけの記録が残ります。ログは、☰メニューの「ログ」で見られます。</p><ul><li><b>未</b>: まだ変わるもの。ベット中、保留した賭け、承認待ちの申請</li><li><b>済</b>: 確定したもの。あとから変えられません。間違えたときは、「戻す」(直前の1回だけ)か、差額を動かす新しい操作で直します</li><li><b>取消</b>: 「戻す」で取り消された操作</li></ul><p>「未」の行からは、そのまま承認や、保留の処理ができます。</p></section>
 <section><h2>保留</h2><p>結果が出るのが別のタイミングのときは、結果入力の画面で「あとで入力する(保留)」を選びます。コインはポットに入ったまま準備フェーズに戻り、画面に「保留中」のカードが出ます。保留中でも、別の賭けを始められます。結果が出たら、カードをタップして入力します(準備フェーズにできます)。</p><ul><li>保留中の賭けがある人は、退出できません</li><li>倍率ゲームの保留があるあいだは、親を降りられません</li><li>保留が残っていても、最終精算で全部返金して精算できます</li></ul></section>
 <section><h2>ミニゲーム(ルーレット)</h2><p>代表者が、☰メニューの「ミニゲーム」→「ルーレット」で始めます。1回で1ターンです。</p><ul><li>賭けた人ごとに円盤の枠ができ、<b>賭け額が多いほど枠が広く</b>なります(全体が100%)。数字を変えるたびに、円盤も変わります</li><li>代表者が「回す」を押すと、円盤が回って、止まった枠の人が<b>ポット全部をもらいます</b>。回す前なら、賭け額の<b>上乗せ</b>も、取り消しもできます</li><li>回したあとは、<b>取り消せません</b>(「戻す」も使えません)</li><li>賭けた人が1人だけのときは、回さずに返金します</li></ul></section>
-<section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。精算と同時に、ルームのデータは保存先(スプレッドシート)から全て削除されます。結果画面は、数分間だけ表示できます。必要なら、「結果をコピー」で保存してください。</p></section>
+<section><h2>最終精算</h2><p>準備フェーズに、代表者が☰メニューから行います。</p><p>最終コイン数 = 残高 − 銀行の借入 − 借りた分 + 貸した分</p><p>この数字で順位が決まります。精算と同時に、ルームのデータは保存先(スプレッドシート)から全て削除されます。結果画面は、1時間だけ表示できます。必要なら、「結果をコピー」で保存してください。また、7日間なにも操作がなかったルームは、自動で削除されます。</p></section>
 <button onclick="GB()">← 戻る</button></div>`}
 const P=()=>S.p[me],isH=()=>S.h===me;
 const opts=()=>Object.keys(S.p).filter(k=>k!==me).map(k=>`<option value=${k}>${esc(S.p[k].n)}</option>`).join('');
@@ -274,7 +286,10 @@ function pickR(b){b.parentNode.querySelectorAll('button').forEach(x=>x.className
 function hold(){closeSheet();act('hold')}
 function resG(id){const al={};document.querySelectorAll('.al').forEach(i=>al[i.dataset.k]=Math.round(+i.value||0));closeSheet();id?act('resP',{id:id,al:al}):act('resG',{al:al})}
 function resH(id){const rs={};document.querySelectorAll('.hr').forEach(h=>{const v=h.querySelector('.seg3 button:not(.ln)');rs[h.dataset.k]={r:v?v.dataset.v:'l',m:+h.querySelector('.rm').value}});closeSheet();id?act('resP',{id:id,rs:rs}):act('resH',{rs:rs})}
-function menu(){const u=openN();sheet(`<h3>メニュー</h3><button onclick="logSheet()">ログ${u?'(未'+u+'件)':''}</button>${isH()&&S.ph==='prep'?`<button onclick="miniSheet()">ミニゲーム</button>`:''}<button onclick="share()">ルームを共有</button>${isH()&&Object.keys(S.p).length>1?`<button onclick="giveSheet()">代表者を移す</button>`:''}${S.ph==='prep'||S.ph==='lobby'?`<button class=ln onclick="if(confirm('退出しますか?'))leave()">退出</button>`:''}${isH()&&S.ph==='prep'?`<button class=dg onclick="settleAsk()">最終精算</button>`:''}`)}
+function menu(){const u=openN();sheet(`<h3>メニュー</h3><button onclick="logSheet()">ログ${u?'(未'+u+'件)':''}</button>${isH()&&S.ph==='prep'?`<button onclick="miniSheet()">ミニゲーム</button>`:''}<button onclick="share()">ルームを共有</button>${isH()&&Object.keys(S.p).length>1?`<button onclick="giveSheet()">代表者を移す</button>`:''}${S.ph==='prep'||S.ph==='lobby'?`<button class=ln onclick="if(confirm('退出しますか?'))leave()">退出</button>`:''}${isH()&&S.ph==='prep'?`<button class=dg onclick="settleAsk()">最終精算</button>`:''}<button class=ln onclick="netSheet()">通信の状態</button><button class=ln style="margin-top:14px;min-height:36px;font-size:12px" onclick="forceOut()">この端末だけ抜ける(エラー時用)</button>`)}
+function netSheet(){const t2=n=>String(n).padStart(2,'0'),e=NET.errs.map(x=>{const d=new Date(x.t);return'<div class=it>'+t2(d.getHours())+':'+t2(d.getMinutes())+':'+t2(d.getSeconds())+' '+esc(x.k)+'</div>'}).join('');
+ sheet(`<h3>通信の状態</h3><div class=it>成功 ${NET.ok}回 / 失敗 ${NET.ng}回</div><div class=it>直近の応答時間 ${NET.ms}ms</div><div class=gh>最近のエラー(新しい順)</div>${e||'<p>エラーはありません</p>'}<small>うまくいかないときは、この画面の内容を教えてください</small>`)}
+function forceOut(){if(!confirm('これは、エラーで操作できなくなったとき専用の機能です。普段は絶対に使いません。\n\nこの端末はルームから抜けます。あとから戻ることはできません。コインはルームに残ります。\n\n本当に抜けますか?'))return;UAB=true;if(CUR)CUR.abort();busy=false;spin(false);reset()}
 function miniSheet(){sheet(`<h3>ミニゲーム</h3><button class=ok onclick="closeSheet();act('mini',{g:'roulette'})">ルーレット</button><button class=ln disabled>サイコロ(準備中)</button><small>ミニゲームは1回で1ターンです。回したあとは取り消せません</small>`)}
 function settleAsk(){const n=S.pd.length;if(confirm(n?'保留中の賭けが'+n+'件あります。全部返金して、最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?':'最終精算します。借金を引いた最終コイン数で順位を発表します。よろしいですか?')){closeSheet();act('settle',n?{rf:1}:{})}}
 function pendSheet(id){const r=S.pd.find(x=>x.id===id);if(!r)return;const can=canRes(r),pr=S.ph==='prep';
@@ -299,14 +314,18 @@ function ended(){closeSheet();const rk=S.res||[];
  if(!acked){acked=true;post({a:'ack',r:rid,p:me});rid=null;sv(null)}}
 document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input[type=number]'))setTimeout(()=>{try{e.target.select()}catch(x){}},0)});
 let polling=false;
-setInterval(async()=>{if(!rid||busy||!S||polling)return;polling=true;const my=rid;try{const r=await(await fetch(API+'?r='+my+'&v='+S.v)).json();
+const pollGap=()=>(Date.now()<fastUntil||(S&&S.rq&&S.rq.length))?1500:2500;
+async function poll(){if(!rid||busy||!S||polling||document.hidden)return;polling=true;const my=rid;try{const r=await req(API+'?r='+my+'&v='+S.v,{},12000);
+ if(r.net){if(++NET.cf===3)toast('通信が不安定です。自動で再接続を試みます');return}NET.cf=0;
  if(!rid||rid!==my||!S||S.ph==='ended')return;
- if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}finally{polling=false}},1500);
+ if(r.err==='gone'){toast('ルームが終了しました');reset()}else if(r.s&&r.s.v>S.v){if(!r.s.p[me])return reset();S=r.s;if(!$('#sh').hidden&&S.ph!==(window._ph||S.ph))closeSheet();window._ph=S.ph;render()}}catch(e){}finally{polling=false}}
+(function tick(){poll();setTimeout(tick,pollGap())})();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});
 async function boot(){const o=ld();if(!(o.rid&&o.me))return home();
  $('#app').innerHTML='<div class=home><p>接続中…</p></div>';
- let r=null;for(let i=0;i<4;i++){try{const j=await(await fetch(API+'?r='+o.rid+'&v=0')).json();if(j&&typeof j==='object'){r=j;break}}catch(e){}await sleep(1500)}
+ let r=null;for(let i=0;i<4;i++){const j=await req(API+'?r='+o.rid+'&v=0',{},12000);if(!j.net){r=j;break}await sleep(1500)}
  if(r&&r.s&&r.s.p[o.me]){S=r.s;me=o.me;rid=o.rid;window._ph=S.ph;return render()}
  if(r){sv(null);return home()}
- $('#app').innerHTML='<div class=home><h1>接続できません</h1><p>通信が不安定なようです。前回のルームの情報は残してあります。</p><button onclick="boot()">もう一度つなぐ</button><div style="height:16px"></div><button class=b2 onclick="sv(null);home()">ホームへ(前回のルームは忘れる)</button></div>'}
+ $('#app').innerHTML='<div class=home><h1>接続できません</h1><p>通信が不安定なようです'+(NET.errs[0]?'('+esc(NET.errs[0].k)+')':'')+'。前回のルームの情報は残してあります。</p><button onclick="boot()">もう一度つなぐ</button><div style="height:16px"></div><button class=b2 onclick="sv(null);home()">ホームへ(前回のルームは忘れる)</button></div>'}
 boot();
 </script></body></html>
